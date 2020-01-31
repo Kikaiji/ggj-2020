@@ -24,18 +24,51 @@ public class PlayerController : MonoBehaviour
 
     void Move( int direction )
     {
-        switch(direction){
+        Vector3 up = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+        Vector3 right = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+        Vector3 down = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+        Vector3 left = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+        switch (direction){
             case 0:
-                Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z), 1f);
+                if (Physics2D.Linecast(transform.position, up, 1 << LayerMask.NameToLayer("Wall")))
+                {
+                    break;
+                    //transform.position = Vector3.MoveTowards(transform.position, up, 1f);
+                }
+                else
+                {
+                    transform.position = up;
+                }
                 break;
             case 1:
-                transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                if (Physics2D.Linecast(transform.position, right, 1 << LayerMask.NameToLayer("Wall")))
+                {
+                    break;
+                }
+                else
+                {
+                    transform.position = right;
+                }
                 break;
             case 2:
-                transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+                if (Physics2D.Linecast(transform.position, down, 1 << LayerMask.NameToLayer("Wall")))
+                {
+                    break;
+                }
+                else
+                {
+                    transform.position = down;
+                }
                 break;
             case 3:
-                transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                if (Physics2D.Linecast(transform.position, left, 1 << LayerMask.NameToLayer("Wall")))
+                {
+                    break;
+                }
+                else
+                {
+                    transform.position = left;
+                }
                 break;
         }
 
