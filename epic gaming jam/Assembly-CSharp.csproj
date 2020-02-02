@@ -55,6 +55,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\Cinematic\CinematicController.cs" />
      <Compile Include="Assets\Scripts\Game\BattleHud.cs" />
      <Compile Include="Assets\Scripts\Game\BattleManager.cs" />
      <Compile Include="Assets\Scripts\Game\EnemyTile.cs" />
@@ -64,6 +65,7 @@
      <Compile Include="Assets\Scripts\Game\Unit.cs" />
      <Compile Include="Assets\Scripts\Player\Collider.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerController.cs" />
+     <Compile Include="Assets\Scripts\Player\PlayerMove.cs" />
      <Compile Include="Assets\Scripts\Player\StatManager.cs" />
      <Compile Include="Assets\Scripts\UI\BuildButton.cs" />
      <Compile Include="Assets\Scripts\UI\ChangeScene.cs" />

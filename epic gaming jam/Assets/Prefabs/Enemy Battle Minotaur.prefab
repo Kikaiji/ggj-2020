@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae9ca2f95f27b714ca6ba72c66b4eea1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitName: Slime
+  unitName: Minotaur
   Defense: 4
   Attack: 8
   Speed: 1
