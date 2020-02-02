@@ -488,8 +488,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4148c3efe0358fe40a494f1ac02f62cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ToLoad: TownScene
-  StatetoLoad: 1
+  ToLoad: Cinematic
+  StatetoLoad: 5
 --- !u!1 &1402176905
 GameObject:
   m_ObjectHideFlags: 0
