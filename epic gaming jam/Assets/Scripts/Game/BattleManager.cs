@@ -122,6 +122,14 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(AllyAttack());
     }
 
+    public void OnRunButton()
+    {
+        if (state != BattleState.PLAYERTURN || (tutorial == true))
+            return;
+
+        StartCoroutine(PlayerRun());
+    }
+
     IEnumerator EndBattle()
     {
         if(state == BattleState.WON)
@@ -129,7 +137,18 @@ public class BattleManager : MonoBehaviour
             consoleText.text = "You've defeated the " + enemyUnit.unitName + "!";
             yield return new WaitForSeconds(3f);
             manager.state = GameState.VENTURE;
-            tManager.Slime = true;
+            switch (enemyID)
+            {
+                case 0:
+                    tManager.Slime = true;
+                    break;
+                case 1:
+                    tManager.Ghost = true;
+                    break;
+                case 2:
+                    tManager.Minotaur = true;
+                    break;
+            }
             rManager.resources[4] += 1;
             if (tutorial) {
                 tManager.tutorial = false;
@@ -137,12 +156,16 @@ public class BattleManager : MonoBehaviour
                 SceneManager.UnloadSceneAsync("BattleScene");
                 SceneManager.UnloadSceneAsync("DungeonScene");
                 SceneManager.LoadSceneAsync("TownScene");
+                playerUnit.CurrentMP = playerUnit.MaxMP;
+                playerUnit.CurrentHP = playerUnit.MaxHP;
             }
-            else { SceneManager.UnloadSceneAsync("BattleScene"); }
+            else { playerUnit.CurrentHP += ((playerUnit.MaxHP / 10) * 3); SceneManager.UnloadSceneAsync("BattleScene"); }
             
         }else if (state == BattleState.LOST)
         {
             consoleText.text = "You've been defeated by the " + enemyUnit.unitName + "!";
+            playerUnit.CurrentMP = playerUnit.MaxMP;
+            playerUnit.CurrentHP = playerUnit.MaxHP;
             yield return new WaitForSeconds(3f);
             manager.state = GameState.TOWN;
             SceneManager.LoadSceneAsync("TownScene");
@@ -218,6 +241,19 @@ public class BattleManager : MonoBehaviour
                 StartCoroutine(EnemyAttack());
             }
         }
+    }
+
+    IEnumerator PlayerRun()
+    {
+        for(int i = 0; i < rManager.resources.Length; i++)
+        {
+            rManager.resources[i] = (rManager.resources[i] * 3) / 4;
+        }
+        consoleText.text = "You ran away!";
+        yield return new WaitForSeconds(2f);
+        SceneManager.UnloadSceneAsync("DungeonScene");
+        SceneManager.UnloadSceneAsync("BattleScene");
+        SceneManager.LoadSceneAsync("TownScene");
     }
 
     IEnumerator EnemyAttack()
