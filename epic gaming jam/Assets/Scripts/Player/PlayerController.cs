@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     LayerMask layerMask;
     ResourceManager rManager;
     GameManager manager;
+    public int enemyID;
 
     // Start is called before the first frame update
     Vector3 pos;                                // For movement
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
                         case "Enemy":
                             pos += Vector3.left;
                             hit.transform.gameObject.SetActive(false);
+                            enemyID = hit.transform.gameObject.GetComponent<EnemyTile>().enemyID;
                             EnemyEvent();
                             break;
                         case "Resource":
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
                         case "Enemy":
                             pos += Vector3.right;
                             hit.transform.gameObject.SetActive(false);
+                            enemyID = hit.transform.gameObject.GetComponent<EnemyTile>().enemyID;
                             EnemyEvent();
                             break;
                         case "Resource":
@@ -103,6 +106,7 @@ public class PlayerController : MonoBehaviour
                         case "Enemy":
                             pos += Vector3.up;
                             hit.transform.gameObject.SetActive(false);
+                            enemyID = hit.transform.gameObject.GetComponent<EnemyTile>().enemyID;
                             EnemyEvent();
                             break;
                         case "Resource":
@@ -131,6 +135,7 @@ public class PlayerController : MonoBehaviour
                         case "Enemy":
                             pos += Vector3.down;
                             hit.transform.gameObject.SetActive(false);
+                            enemyID = hit.transform.gameObject.GetComponent<EnemyTile>().enemyID;
                             EnemyEvent();
                             break;
                         case "Resource":
@@ -160,6 +165,7 @@ public class PlayerController : MonoBehaviour
         print("enemy event");
         manager.state = GameState.BATTLE;
         dCanvas.SetActive(false);
+        
         SceneManager.LoadSceneAsync("BattleScene", LoadSceneMode.Additive);
         
     }
