@@ -29,9 +29,20 @@ public class Unit : MonoBehaviour
         return false;
     }
 
-    public void Heal(int heal, int cost)
+    public void TakeMP(int cost)
     {
         CurrentMP -= cost;
-        CurrentHP += heal;
+    }
+
+    public bool Heal(int heal, int cost)
+    {
+        if((CurrentMP -= cost) >= 0)
+        {
+            CurrentMP -= cost;
+            CurrentHP += heal;
+            if (CurrentHP > MaxHP) { CurrentHP = MaxHP; }
+            return true;
+        }
+        return false;
     }
 }

@@ -1141,7 +1141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ally: 0
-  allyPrefab: {fileID: 0}
+  allyPrefab: {fileID: 1600618027399210331, guid: 42fa4bafb5a0bcf43ac926d2c4520684,
+    type: 3}
   playerPrefab: {fileID: 7949864120253386419, guid: 23784b9ed7f1b8048ba7f0e31a68817b,
     type: 3}
   enemyPrefab: {fileID: 2445701092623101230, guid: eba1070ecdd1fee44923b342dbc863fd,

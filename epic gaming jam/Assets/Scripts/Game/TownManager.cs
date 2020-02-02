@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TownManager : MonoBehaviour
 {
+    public GameObject SlimeO;
+    public GameObject Goblin;
     public bool Slime = false;
-    bool Gardener = false;
+    public bool Gardener;
     public int gameState;
     int prevGameState;
     GameObject townSprite;
@@ -29,7 +31,14 @@ public class TownManager : MonoBehaviour
             townSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
             prevGameState = gameState;
         }
-
+        if (Slime)
+        {
+            SlimeO.SetActive(true);
+        } else { Goblin.SetActive(false); }
+        if(Gardener)
+        {
+            Goblin.SetActive(true);
+        } else { Goblin.SetActive(false); }
 
     }
 

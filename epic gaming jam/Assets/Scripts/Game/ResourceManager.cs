@@ -1,18 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class ResourceManager : MonoBehaviour
 {
-    public float[] resources = new float[3];
+    [SerializeField]
+    GameObject resourcebox;
+    public float[] resources = new float[5];
     // Start is called before the first frame update
     void Start()
     {
+        resourcebox = GameObject.Find("ResourceBox");
         DontDestroyOnLoad(gameObject);
+        for(int i = 0; i < 3; i++)
+        {
+            //resources[i] = Random.Range(1, 4);
+            resources[i] = 10f;
+        }
         for(int i = 0; i < resources.Length; i++)
         {
-            resources[i] = Random.Range(1, 4);
+            resourcebox.transform.GetChild(i).GetComponent<Text>().text = resources[i].ToString();
         }
     }
 

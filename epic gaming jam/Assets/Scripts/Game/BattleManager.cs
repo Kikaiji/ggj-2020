@@ -10,6 +10,7 @@ public class BattleManager : MonoBehaviour
 
     GameManager manager;
     GameObject dCanvas;
+    ResourceManager rManager;
 
     TownManager tManager;
 
@@ -37,6 +38,7 @@ public class BattleManager : MonoBehaviour
     }
     public void Start()
     {
+        rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         state = BattleState.START;
@@ -51,6 +53,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator SetUpBattle()
     {
+        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
         playerUnit = playerGO.GetComponent<Unit>();
         GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
@@ -97,6 +100,7 @@ public class BattleManager : MonoBehaviour
             yield return new WaitForSeconds(3f);
             manager.state = GameState.VENTURE;
             tManager.Slime = true;
+            rManager.resources[4] += 1;
             SceneManager.UnloadSceneAsync("BattleScene");
         }else if (state == BattleState.LOST)
         {
@@ -137,8 +141,8 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN)
         {
-            playerUnit.Heal(playerUnit.Defense, 3);
-
+            bool y = playerUnit.Heal(playerUnit.Defense, 3);
+            if (y) { consoleText.text = "The move was successful!"; }
             playerHud.SetHp(playerUnit.CurrentHP);
             playerHud.SetMp(playerUnit.CurrentMP);
 
@@ -146,6 +150,32 @@ public class BattleManager : MonoBehaviour
 
             state = BattleState.ENEMYTURN;
             StartCoroutine(EnemyAttack());
+        }
+    }
+
+    IEnumerator AllyAttack()
+    {
+        if (state == BattleState.PLAYERTURN && tManager.Goblin)
+        {
+            playerUnit.anim.Play("NomadBattleAnim");
+            bool isdead = enemyUnit.TakeDamage(playerUnit.Attack * 2);
+            yield return new WaitForSeconds(1f);
+            enemyHud.SetHp(enemyUnit.CurrentHP);
+            consoleText.text = enemyUnit.unitName + " took " + playerUnit.Attack + "damage!";
+            yield return new WaitForSeconds(2f);
+            enemyHud.SetHp(enemyUnit.CurrentHP);
+            playerHud.SetMp(playerUnit.CurrentMP);
+
+            if (isdead)
+            {
+                state = BattleState.WON;
+                StartCoroutine(EndBattle());
+            }
+            else
+            {
+                state = BattleState.ENEMYTURN;
+                StartCoroutine(EnemyAttack());
+            }
         }
     }
 
@@ -165,7 +195,6 @@ public class BattleManager : MonoBehaviour
         else
         {
             state = BattleState.PLAYERTURN;
-            StartCoroutine(PlayerAttack());
         }
     }
 }
