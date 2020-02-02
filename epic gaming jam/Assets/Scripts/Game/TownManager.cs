@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TownManager : MonoBehaviour
 {
@@ -33,11 +34,12 @@ public class TownManager : MonoBehaviour
         }
         if (Slime)
         {
-            SlimeO.SetActive(true);
+            if(SceneManager.GetActiveScene().name == "TownScene") { SlimeO.SetActive(true); }
+            
         } else { Goblin.SetActive(false); }
         if(Gardener)
         {
-            Goblin.SetActive(true);
+            if (SceneManager.GetActiveScene().name == "TownScene") { Goblin.SetActive(true); }
         } else { Goblin.SetActive(false); }
 
     }
