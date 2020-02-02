@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class DialogController : MonoBehaviour
 {
+    private static DialogController instance = null;
+
     public Text text;
     public TownManager townManager;
 
@@ -18,11 +20,24 @@ public class DialogController : MonoBehaviour
 
     public GameObject nomadPortrait;
 
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(gameObject);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        if (!townManager.tutorial && townManager.gameState == 0)
+        DontDestroyOnLoad(this);
+        //if (!townManager.tutorial && townManager.gameState == 0)
+        print(townManager.Slime);
+        if(townManager.Slime == false)
         {
+            print("execute");
             string filePath = "Assets/Dialog/IntroDialogue_01.txt";
             LoadDialog(filePath);
             ExecuteDialog(dialogEvents[0]);

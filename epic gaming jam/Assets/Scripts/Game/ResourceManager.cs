@@ -6,12 +6,27 @@ using UnityEngine.UI;
 
 public class ResourceManager : MonoBehaviour
 {
+
+    private static ResourceManager playerInstance;
     [SerializeField]
     GameObject resourcebox;
     float sum;
     TownManager tmanager;
     public float[] resources = new float[5];
     // Start is called before the first frame update
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+
+        if (playerInstance == null)
+        {
+            playerInstance = this;
+        }
+        else
+        {
+            GameObject.Destroy(gameObject);
+        }
+    }
     void Start()
     {
         tmanager = GameObject.Find("TownManager").GetComponent<TownManager>();

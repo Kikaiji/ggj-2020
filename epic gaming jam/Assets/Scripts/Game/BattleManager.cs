@@ -140,6 +140,7 @@ public class BattleManager : MonoBehaviour
             switch (enemyID)
             {
                 case 0:
+                    print("slime = true");
                     tManager.Slime = true;
                     break;
                 case 1:

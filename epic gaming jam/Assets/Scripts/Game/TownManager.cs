@@ -5,6 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class TownManager : MonoBehaviour
 {
+    private static TownManager playerInstance;
+        
+    DialogController dController;
     StatManager sManager;
     public int switches;
     public bool tutorial;
@@ -22,21 +25,39 @@ public class TownManager : MonoBehaviour
     GameObject townSprite;
     ResourceManager rManager;
     // Start is called before the first frame update
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+
+        if(playerInstance == null)
+        {
+            playerInstance = this;
+        }
+        else
+        {
+            GameObject.Destroy(gameObject);
+        }
+    }
     void Start()
     {
         sManager = GameObject.Find("StatManager").GetComponent<StatManager>();
         tutorial = true;
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        DontDestroyOnLoad(gameObject);
+
         townSprite = GameObject.Find("TownSprite");
         gameState = 0;
         prevGameState = gameState;
         townSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
+        if(Slime == false)
+        {
+            
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        print(Slime);
         if(prevGameState != gameState)
         {
             townSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
