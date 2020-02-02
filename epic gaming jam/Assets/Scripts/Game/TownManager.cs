@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class TownManager : MonoBehaviour
 {
+    public bool tutorial;
     public GameObject SlimeO;
     public GameObject Goblin;
     public bool Slime = false;
@@ -16,6 +17,7 @@ public class TownManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        tutorial = true;
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         DontDestroyOnLoad(gameObject);
         townSprite = GameObject.Find("TownSprite");
@@ -34,13 +36,13 @@ public class TownManager : MonoBehaviour
         }
         if (Slime)
         {
-            if(SceneManager.GetActiveScene().name == "TownScene") { SlimeO.SetActive(true); }
+            if(SlimeO != null) { SlimeO.SetActive(true); }
             
-        } else { Goblin.SetActive(false); }
+        } else { if(SlimeO != null) SlimeO.SetActive(false); }
         if(Gardener)
         {
-            if (SceneManager.GetActiveScene().name == "TownScene") { Goblin.SetActive(true); }
-        } else { Goblin.SetActive(false); }
+            if (Goblin != null) { Goblin.SetActive(true); }
+        } else { if(Goblin!= null) Goblin.SetActive(false); }
 
     }
 
