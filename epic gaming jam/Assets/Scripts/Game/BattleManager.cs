@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
 public class BattleManager : MonoBehaviour
 {
-
+    bool tutorial;
     GameManager manager;
     GameObject dCanvas;
     ResourceManager rManager;
@@ -38,8 +38,10 @@ public class BattleManager : MonoBehaviour
     }
     public void Start()
     {
+
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
+        tutorial = tManager.tutorial;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         state = BattleState.START;
         Debug.Log(SceneManager.GetSceneAt(1).name);
@@ -92,6 +94,14 @@ public class BattleManager : MonoBehaviour
         StartCoroutine(PlayerHeal());
     }
 
+    public void OnAssistButton()
+    {
+        if (state != BattleState.PLAYERTURN)
+            return;
+
+        StartCoroutine(AllyAttack());
+    }
+
     IEnumerator EndBattle()
     {
         if(state == BattleState.WON)
@@ -101,7 +111,12 @@ public class BattleManager : MonoBehaviour
             manager.state = GameState.VENTURE;
             tManager.Slime = true;
             rManager.resources[4] += 1;
-            SceneManager.UnloadSceneAsync("BattleScene");
+            if (tutorial) { SceneManager.UnloadSceneAsync("BattleScene");
+                SceneManager.UnloadSceneAsync("DungeonScene");
+                SceneManager.LoadSceneAsync("TownScene");
+            }
+            else { SceneManager.UnloadSceneAsync("BattleScene"); }
+            
         }else if (state == BattleState.LOST)
         {
             consoleText.text = "You've been defeated by the " + enemyUnit.unitName + "!";
@@ -155,16 +170,19 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator AllyAttack()
     {
-        if (state == BattleState.PLAYERTURN && tManager.Goblin)
+        print("goblin");
+        if (state == BattleState.PLAYERTURN && tManager.Gardener == true)
         {
             playerUnit.anim.Play("NomadBattleAnim");
             bool isdead = enemyUnit.TakeDamage(playerUnit.Attack * 2);
-            yield return new WaitForSeconds(1f);
+            playerUnit.TakeMP(4);
+            playerHud.SetMp(playerUnit.CurrentMP);
+            yield return new WaitForSeconds(0.5f);
             enemyHud.SetHp(enemyUnit.CurrentHP);
             consoleText.text = enemyUnit.unitName + " took " + playerUnit.Attack + "damage!";
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSeconds(1f);
             enemyHud.SetHp(enemyUnit.CurrentHP);
-            playerHud.SetMp(playerUnit.CurrentMP);
+            
 
             if (isdead)
             {
@@ -195,6 +213,7 @@ public class BattleManager : MonoBehaviour
         else
         {
             state = BattleState.PLAYERTURN;
+            consoleText.text = "Choose an Option:";
         }
     }
 }
