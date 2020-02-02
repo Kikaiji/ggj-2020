@@ -38,7 +38,9 @@ public class DialogController : MonoBehaviour
         if(townManager.Slime == false)
         {
             print("execute");
-            string filePath = "Assets/Dialog/IntroDialogue_01.txt";
+            string filePathSuffix = "/Dialog/IntroDialogue_01.txt";
+            string filePath = Application.streamingAssetsPath + filePathSuffix;
+            Debug.Log(filePath);
             LoadDialog(filePath);
             ExecuteDialog(dialogEvents[0]);
         }
