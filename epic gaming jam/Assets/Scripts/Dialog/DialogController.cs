@@ -83,10 +83,31 @@ public class DialogController : MonoBehaviour
     public static IList<DialogEvent> ParseFile(string filepath)
     {
         IList<DialogEvent> dialogEvents = new List<DialogEvent>();
-        StreamReader reader = new StreamReader(filepath);
-        while (!reader.EndOfStream)
+
+        //StreamReader reader = new StreamReader(filepath);
+
+        // Assets directory doesn't exist outside of the Unity Editor so we can't
+        // access assets this way. For now this just hardcodes the file contents.
+        string tempFileContents = @"Mysterious Voice: “Hey. Yeah you there”
+Nomad: ”?” 
+Mysterious Voice: “That weapon. You might be able to help.”
+Nomad: ”...” 
+Mysterious Voice: “Once a most bountiful land; what good was left now in shambles, wrought by terrible beasts and villains.”
+Mysterious Voice: “Please. Restore this hearth, and repair what was home to many.”
+Nomad: “...”
+Mysterious Voice: *Sigh* “I can’t help but look in despair. Not a single villager remains.” 
+Mysterious Voice: “We must get started somewhere. It appears you came prepared, you have a fair amount of resources with you, but not enough to begin building.”
+Mysterious Voice: “See that gate? Come; we must gather more items.”";
+        StringReader reader = new StringReader(tempFileContents);
+        
+        
+        while (true)
         {
             string line = reader.ReadLine();
+            if (line == null)
+            {
+                break;
+            }
             if (line.Contains(":"))
             {
                 string[] person = line.Split(':');
