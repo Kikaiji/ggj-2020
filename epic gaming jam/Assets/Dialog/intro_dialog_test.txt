@@ -1,0 +1,8 @@
+Bob: Hello
+Fred: Wow his is text
+*
+Bob: Hey new scene
+#shake
+Bob: Test
+(test)
+Fred: Wow
