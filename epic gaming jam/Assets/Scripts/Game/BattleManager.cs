@@ -62,8 +62,8 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator SetUpBattle()
     {
-        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
+        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         playerUnit = playerGO.GetComponent<Unit>();
         GameObject enemyGO = new GameObject();
         switch (enemyID)
