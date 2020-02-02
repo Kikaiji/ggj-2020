@@ -1147,6 +1147,10 @@ MonoBehaviour:
     type: 3}
   enemyPrefab: {fileID: 2445701092623101230, guid: eba1070ecdd1fee44923b342dbc863fd,
     type: 3}
+  enemyPrefab2: {fileID: 9011925223600059241, guid: ccc7c811201e1184d8f5eb35bdd67eb2,
+    type: 3}
+  enemyPrefab3: {fileID: 2686749865822242646, guid: 9da9fe786d190cc43b79816a5190c46d,
+    type: 3}
   playerStation: {fileID: 2139636198}
   enemyStation: {fileID: 2007085325}
   playerHud: {fileID: 242315229}
@@ -2729,7 +2733,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:

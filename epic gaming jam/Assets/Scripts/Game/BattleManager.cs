@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
 public class BattleManager : MonoBehaviour
 {
+    int enemyID;
     bool tutorial;
     GameManager manager;
     GameObject dCanvas;
     ResourceManager rManager;
+    PlayerController pcontroller;
 
     TownManager tManager;
 
@@ -18,6 +20,8 @@ public class BattleManager : MonoBehaviour
     public GameObject allyPrefab;
     public GameObject playerPrefab;
     public GameObject enemyPrefab;
+    public GameObject enemyPrefab2;
+    public GameObject enemyPrefab3;
 
     public Transform playerStation;
     public Transform enemyStation;
@@ -43,6 +47,8 @@ public class BattleManager : MonoBehaviour
         tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
         tutorial = tManager.tutorial;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
+        enemyID = pcontroller.enemyID;
         state = BattleState.START;
         Debug.Log(SceneManager.GetSceneAt(1).name);
         StartCoroutine(SetUpBattle());
@@ -50,6 +56,7 @@ public class BattleManager : MonoBehaviour
 
     void Update()
     {
+        print(enemyID);
         if (Input.GetKeyDown(KeyCode.A)) { playerUnit.anim.speed = 1; }
     }
 
@@ -58,7 +65,20 @@ public class BattleManager : MonoBehaviour
         if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
         playerUnit = playerGO.GetComponent<Unit>();
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
+        GameObject enemyGO = new GameObject();
+        switch (enemyID)
+        {
+            case 0:
+                enemyGO = Instantiate(enemyPrefab, enemyStation);
+                break;
+            case 1:
+                enemyGO = Instantiate(enemyPrefab2, enemyStation);
+                break;
+            case 2:
+                enemyGO = Instantiate(enemyPrefab3, enemyStation);
+                break;
+        }
+        
         enemyUnit = enemyGO.GetComponent<Unit>();
 
         consoleText.text = "A " + enemyUnit.unitName + " Approaches";
@@ -111,7 +131,10 @@ public class BattleManager : MonoBehaviour
             manager.state = GameState.VENTURE;
             tManager.Slime = true;
             rManager.resources[4] += 1;
-            if (tutorial) { SceneManager.UnloadSceneAsync("BattleScene");
+            if (tutorial) {
+                tManager.tutorial = false;
+                tutorial = false;
+                SceneManager.UnloadSceneAsync("BattleScene");
                 SceneManager.UnloadSceneAsync("DungeonScene");
                 SceneManager.LoadSceneAsync("TownScene");
             }
