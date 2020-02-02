@@ -16,6 +16,7 @@ public class TownManager : MonoBehaviour
     public bool Minotaur;
     public bool Ghost;
     public int gameState;
+    public bool hasSeenDialog = false;
     public int townLevel;
     int prevGameState;
     GameObject townSprite;

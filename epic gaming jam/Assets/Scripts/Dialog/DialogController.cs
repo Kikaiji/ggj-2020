@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class DialogController : MonoBehaviour
 {
     public Text text;
+    public TownManager townManager;
 
     private IList<DialogEvent> dialogEvents;
     private int dialogIndex;
@@ -20,9 +21,12 @@ public class DialogController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string filePath = "Assets/Dialog/IntroDialogue_01.txt";
-        LoadDialog(filePath);
-        ExecuteDialog(dialogEvents[0]);
+        if (!townManager.tutorial && townManager.gameState == 0)
+        {
+            string filePath = "Assets/Dialog/IntroDialogue_01.txt";
+            LoadDialog(filePath);
+            ExecuteDialog(dialogEvents[0]);
+        }
     }
 
     public void LoadDialog(string filePath)

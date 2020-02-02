@@ -20,7 +20,7 @@ public class ResourceManager : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             //resources[i] = Random.Range(1, 4);
-            resources[i] = 10f;
+            resources[i] = 12f;
         }
         for(int i = 0; i < resources.Length; i++)
         {
