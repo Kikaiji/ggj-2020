@@ -20,7 +20,6 @@ public class PlayerMove : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Mouse0))
         {
             pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z);
-            print(pos);
             if(Input.mousePosition.x > transform.position.x) { animator.Play("NomadMapWalkRight"); }
             else if (Input.mousePosition.x < transform.position.x) { animator.Play("NomadMapWalk"); }
             else { animator.Play("NomadMapIdle"); }

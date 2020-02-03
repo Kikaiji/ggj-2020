@@ -162,7 +162,6 @@ public class PlayerController : MonoBehaviour
 
     void EnemyEvent()
     {
-        print("enemy event");
         manager.state = GameState.BATTLE;
         dCanvas.SetActive(false);
         
@@ -172,7 +171,6 @@ public class PlayerController : MonoBehaviour
 
     void ResourceEvent()
     {
-        print("resource event");
         int resource = Random.Range(0, 3);
         string name = "";
         switch (resource)
@@ -194,7 +192,6 @@ public class PlayerController : MonoBehaviour
 
     void SpecialEvent()
     {
-        print("special event");
         string[] text = new string[3];
         for (int i = 0; i < 3; i++)
         {

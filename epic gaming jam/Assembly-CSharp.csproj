@@ -72,8 +72,8 @@
      <Compile Include="Assets\Scripts\UI\ChangeScene.cs" />
      <Compile Include="Assets\Scripts\UI\MenuManager.cs" />
      <Compile Include="Assets\Scripts\UI\MoveMenu.cs" />
-     <None Include="Assets\Dialog\intro_dialog_test.txt" />
-     <None Include="Assets\Dialog\IntroDialogue_01.txt" />
+     <None Include="Assets\StreamingAssets\Dialog\intro_dialog_test.txt" />
+     <None Include="Assets\StreamingAssets\Dialog\IntroDialogue_01.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/Oliver/Documents/GitHub/ggj-2020/epic gaming jam/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
