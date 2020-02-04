@@ -34,13 +34,10 @@ public class DialogController : MonoBehaviour
     {
         DontDestroyOnLoad(this);
         //if (!townManager.tutorial && townManager.gameState == 0)
-        print(townManager.Slime);
         if(townManager.Slime == false)
         {
-            print("execute");
             string filePathSuffix = "/Dialog/IntroDialogue_01.txt";
             string filePath = Application.streamingAssetsPath + filePathSuffix;
-            Debug.Log(filePath);
             LoadDialog(filePath);
             ExecuteDialog(dialogEvents[0]);
         }

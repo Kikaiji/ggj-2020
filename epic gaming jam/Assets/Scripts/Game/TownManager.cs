@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TownManager : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class TownManager : MonoBehaviour
     int prevGameState;
     GameObject townSprite;
     ResourceManager rManager;
-    // Start is called before the first frame update
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
@@ -47,7 +47,7 @@ public class TownManager : MonoBehaviour
         townSprite = GameObject.Find("TownSprite");
         gameState = 0;
         prevGameState = gameState;
-        townSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
+        townSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
         if(Slime == false)
         {
             
@@ -57,10 +57,13 @@ public class TownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        print(Slime);
+        if (townSprite == null) { townSprite = GameObject.Find("TownSprite"); }
+        if (SlimeO == null) { SlimeO = GameObject.Find("Slime"); print("find"); }
+        if (Goblin == null) { Goblin = GameObject.Find("Goblin"); print("find"); }
+        if (GhostO == null) { GhostO = GameObject.Find("Ghost"); print("find"); }
         if(prevGameState != gameState)
         {
-            townSprite.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
+            townSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
             prevGameState = gameState;
         }
         

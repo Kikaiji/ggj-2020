@@ -50,13 +50,11 @@ public class BattleManager : MonoBehaviour
         pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
         enemyID = pcontroller.enemyID;
         state = BattleState.START;
-        Debug.Log(SceneManager.GetSceneAt(1).name);
         StartCoroutine(SetUpBattle());
     }
 
     void Update()
     {
-        print(enemyID);
         if (Input.GetKeyDown(KeyCode.A)) { playerUnit.anim.speed = 1; }
     }
 
@@ -140,7 +138,6 @@ public class BattleManager : MonoBehaviour
             switch (enemyID)
             {
                 case 0:
-                    print("slime = true");
                     tManager.Slime = true;
                     break;
                 case 1:
@@ -203,15 +200,18 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN)
         {
-            bool y = playerUnit.Heal(playerUnit.Defense, 3);
-            if (y) { consoleText.text = "The move was successful!"; }
-            playerHud.SetHp(playerUnit.CurrentHP);
-            playerHud.SetMp(playerUnit.CurrentMP);
+            if (playerUnit.CurrentMP < 3)
+            {
+                bool y = playerUnit.Heal(playerUnit.Defense, 3);
+                if (y) { consoleText.text = "The move was successful!"; }
+                playerHud.SetHp(playerUnit.CurrentHP);
+                playerHud.SetMp(playerUnit.CurrentMP);
 
-            yield return new WaitForSeconds(2f);
+                yield return new WaitForSeconds(2f);
 
-            state = BattleState.ENEMYTURN;
-            StartCoroutine(EnemyAttack());
+                state = BattleState.ENEMYTURN;
+                StartCoroutine(EnemyAttack());
+            }
         }
     }
 
