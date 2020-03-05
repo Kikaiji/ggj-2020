@@ -4,6 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+//manages the townstates, says when the slime gardener etc need to be active.
+
+//probably needs cleaning up
 public class TownManager : MonoBehaviour
 {
     private static TownManager playerInstance;
@@ -43,7 +46,6 @@ public class TownManager : MonoBehaviour
         sManager = GameObject.Find("StatManager").GetComponent<StatManager>();
         tutorial = true;
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-
         townSprite = GameObject.Find("TownSprite");
         gameState = 0;
         prevGameState = gameState;
@@ -57,15 +59,13 @@ public class TownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //checks if each thing is active, tries to make sure that the references are still about
+        print(SceneManager.GetActiveScene().name);
         if (townSprite == null) { townSprite = GameObject.Find("TownSprite"); }
-        if (SlimeO == null) { SlimeO = GameObject.Find("Slime"); print("find"); }
-        if (Goblin == null) { Goblin = GameObject.Find("Goblin"); print("find"); }
-        if (GhostO == null) { GhostO = GameObject.Find("Ghost"); print("find"); }
-        if(prevGameState != gameState)
-        {
-            townSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
-            prevGameState = gameState;
-        }
+        if (SlimeO == null && SceneManager.GetActiveScene().name == "TownScene") { SlimeO = GameObject.Find("Slime"); print("find"); }
+        if (Goblin == null && SceneManager.GetActiveScene().name == "TownScene") { Goblin = GameObject.Find("Goblin"); print("find"); }
+        if (GhostO == null && SceneManager.GetActiveScene().name == "TownScene") { GhostO = GameObject.Find("Ghost"); print("find"); }
+        if(SceneManager.GetActiveScene().name == "TownScene") townSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
         
         if (Slime)
         {
@@ -90,22 +90,18 @@ public class TownManager : MonoBehaviour
 
     public bool BuildGarden()
     {
+        //very temporary, for the build menu button, only builds the garden. will need to fileIO this in the future
         if(rManager.CheckForResource(0, 6) && rManager.CheckForResource(1, 6) && rManager.CheckForResource(2, 12) && gameState < 1){
             rManager.RemoveResource(0, 6);
             rManager.RemoveResource(1, 6);
             rManager.RemoveResource(2, 12);
             gameState += 1;
-            RunDialogue();
+            //RunDialogue();
             Gardener = true;
             sManager.playerStats[0] += 15;
             sManager.playerStats[1] = sManager.playerStats[0];
             return true;
         }
         return false;
-    }
-
-    void RunDialogue()
-    {
-
     }
 }

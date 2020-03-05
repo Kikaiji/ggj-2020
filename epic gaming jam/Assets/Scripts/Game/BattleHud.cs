@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class BattleHud : MonoBehaviour
 {
+    //grabs the unit's hp and mp, sets the hud for that unit
     public Text nameText;
     public Slider hpSlider;
     public Slider mpSlider;
@@ -21,6 +22,7 @@ public class BattleHud : MonoBehaviour
         }
     }
 
+    //refreshes the mp/hp bars
     public void SetHp(int hp)
     {
         hpSlider.value = hp;

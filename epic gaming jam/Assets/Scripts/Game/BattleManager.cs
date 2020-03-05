@@ -4,11 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public enum BattleState { START, PLAYERTURN, ENEMYTURN, WON, LOST}
+// a lot
+public enum BattleState { START, PLAYERTURN, ALLYTURN, ENEMYTURN, PROCESSING, WON, LOST}
 public class BattleManager : MonoBehaviour
 {
     int enemyID;
     bool tutorial;
+    Database database;
     GameManager manager;
     GameObject dCanvas;
     ResourceManager rManager;
@@ -23,6 +25,13 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyPrefab2;
     public GameObject enemyPrefab3;
 
+    GameObject AllyAction;
+    GameObject PlayerAction;
+
+    public GameObject enemypositions;
+    public GameObject[] enemies = new GameObject[9];
+    public GameObject[] turnOrder = new GameObject[11];
+
     public Transform playerStation;
     public Transform enemyStation;
 
@@ -35,27 +44,39 @@ public class BattleManager : MonoBehaviour
     public Text consoleText;
 
     public BattleState state;
-    // Start is called before the first frame update
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-
-    }
     public void Start()
     {
-
+        AllyAction = GameObject.Find("Ally Action Box");
+        PlayerAction = GameObject.Find("Player Action Box");
+        database = GameObject.Find("Database").GetComponent<Database>();
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
         tutorial = tManager.tutorial;
         manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
         enemyID = pcontroller.enemyID;
+        enemypositions = GameObject.Find("EnemyGrid");
         state = BattleState.START;
         StartCoroutine(SetUpBattle());
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) { playerUnit.anim.speed = 1; }
+        if (state == BattleState.PLAYERTURN)
+        {
+            PlayerAction.SetActive(true);
+            AllyAction.SetActive(false);
+        }
+        else if (state == BattleState.ALLYTURN)
+        {
+            PlayerAction.SetActive(false);
+            AllyAction.SetActive(true);
+        }
+        else
+        {
+            PlayerAction.SetActive(false);
+            AllyAction.SetActive(false);
+        }
     }
 
     IEnumerator SetUpBattle()
@@ -63,21 +84,24 @@ public class BattleManager : MonoBehaviour
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
         if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         playerUnit = playerGO.GetComponent<Unit>();
-        GameObject enemyGO = new GameObject();
-        switch (enemyID)
-        {
-            case 0:
-                enemyGO = Instantiate(enemyPrefab, enemyStation);
-                break;
-            case 1:
-                enemyGO = Instantiate(enemyPrefab2, enemyStation);
-                break;
-            case 2:
-                enemyGO = Instantiate(enemyPrefab3, enemyStation);
-                break;
-        }
-        
+        GameObject enemyGO = Instantiate(enemyPrefab);
         enemyUnit = enemyGO.GetComponent<Unit>();
+        Enemy enemy = database.FetchEnemyByID(enemyID);
+
+        enemyUnit.Attack = enemy.Stats.Attack;
+        enemyUnit.Defense = enemy.Stats.Defense;
+        enemyUnit.Speed = enemy.Stats.Speed;
+        enemyUnit.unitName = enemy.Name;
+        enemyUnit.MaxHP = enemy.Stats.Health;
+        enemyUnit.MaxMP = enemy.Stats.Mana;
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            if(enemies[i] != null)
+            {
+                enemyGO.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/EnemySprites/" + enemy.Slug);
+            }
+        }
 
         consoleText.text = "A " + enemyUnit.unitName + " Approaches";
 
@@ -88,11 +112,26 @@ public class BattleManager : MonoBehaviour
         state = BattleState.PLAYERTURN;
         if( playerUnit.Speed >= enemyUnit.Speed) { PlayerTurn(); }
         else { EnemyAttack(); }
-        
+
+    }
+
+    void SetEnemyPosition(GameObject enemy)
+    {
+        bool state = false;
+        if (!state)
+        {
+            int rand = Random.Range(0, 9);
+            if (enemies[rand] == null)
+            {
+                enemies[rand] = enemy;
+                state = true;
+            }
+        }
     }
 
     void PlayerTurn()
     {
+        PlayerAction.SetActive(true);
         consoleText.text = "Choose an Action: ";
     }
 
@@ -174,6 +213,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN)
         {
+            state = BattleState.PROCESSING;
             playerUnit.anim.Play("NomadBattleAnim");
             bool isdead = enemyUnit.TakeDamage(playerUnit.Attack);
             yield return new WaitForSeconds(1f);
@@ -202,6 +242,7 @@ public class BattleManager : MonoBehaviour
         {
             if (playerUnit.CurrentMP < 3)
             {
+                state = BattleState.PROCESSING;
                 bool y = playerUnit.Heal(playerUnit.Defense, 3);
                 if (y) { consoleText.text = "The move was successful!"; }
                 playerHud.SetHp(playerUnit.CurrentHP);
@@ -220,6 +261,7 @@ public class BattleManager : MonoBehaviour
         print("goblin");
         if (state == BattleState.PLAYERTURN && tManager.Gardener == true)
         {
+            state = BattleState.PROCESSING;
             playerUnit.anim.Play("NomadBattleAnim");
             bool isdead = enemyUnit.TakeDamage(playerUnit.Attack * 2);
             playerUnit.TakeMP(4);
@@ -246,7 +288,8 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator PlayerRun()
     {
-        for(int i = 0; i < rManager.resources.Length; i++)
+        state = BattleState.PROCESSING;
+        for (int i = 0; i < rManager.resources.Length; i++)
         {
             rManager.resources[i] = (rManager.resources[i] * 3) / 4;
         }
@@ -259,6 +302,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator EnemyAttack()
     {
+        state = BattleState.PROCESSING;
         consoleText.text = enemyUnit.unitName + " attacks!";
         yield return new WaitForSeconds(1f);
         bool isDead = playerUnit.TakeDamage(enemyUnit.Attack);

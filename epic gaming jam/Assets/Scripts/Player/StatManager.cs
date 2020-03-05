@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//going to be used to set the players stats, and modify them depending on level
 public class StatManager : MonoBehaviour
 {
     public int[] playerStats = new int[7];

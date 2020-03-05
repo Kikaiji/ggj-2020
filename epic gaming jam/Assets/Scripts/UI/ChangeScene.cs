@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//use this to change scene on whatever.
 public class ChangeScene : MonoBehaviour
 {
     [SerializeField]

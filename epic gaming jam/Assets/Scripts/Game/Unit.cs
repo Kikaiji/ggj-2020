@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
+    //a battle unit, all the stats are below. animations arent quite working.
     public string unitName;
     public int Defense;
     public int Attack;
@@ -18,6 +19,8 @@ public class Unit : MonoBehaviour
     {
         anim = transform.GetChild(0).GetComponent<Animator>();
     }
+
+    //whenever something takes damage
     public bool TakeDamage(int damage)
     {
         CurrentHP -= damage;
@@ -29,11 +32,13 @@ public class Unit : MonoBehaviour
         return false;
     }
 
+    //takes mp
     public void TakeMP(int cost)
     {
         CurrentMP -= cost;
     }
 
+    //heal function for units
     public bool Heal(int heal, int cost)
     {
         if((CurrentMP -= cost) >= 0)

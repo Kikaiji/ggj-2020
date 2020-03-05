@@ -2,14 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//lets the player move about the town map
 public class PlayerMove : MonoBehaviour
 {
     Vector3 pos;
     public int speed;
+    Rigidbody2D rb2d;
     Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         pos = transform.position;
     }
@@ -17,12 +20,15 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0))
+        if (pos.x > transform.position.x) { animator.Play("NomadMapWalkRight"); }
+        if (pos.x < transform.position.x) { animator.Play("NomadMapWalkAnim"); }
+        if (pos.x == transform.position.x) { animator.Play("NomadMapIdle"); }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            pos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, transform.position.z);
-            if(Input.mousePosition.x > transform.position.x) { animator.Play("NomadMapWalkRight"); }
-            else if (Input.mousePosition.x < transform.position.x) { animator.Play("NomadMapWalk"); }
-            else { animator.Play("NomadMapIdle"); }
+            Vector3 mousepos = Input.mousePosition;
+            mousepos = Camera.main.ScreenToWorldPoint(mousepos);
+            pos = new Vector3(mousepos.x, mousepos.y, transform.position.z);
+            
         }
         transform.position = Vector3.MoveTowards(transform.position, pos, speed * Time.deltaTime);
     }

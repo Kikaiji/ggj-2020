@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+//player controller for the dungeon scene
+//determines movement and interaction with tiles.
 public class PlayerController : MonoBehaviour
 {
     [SerializeField]

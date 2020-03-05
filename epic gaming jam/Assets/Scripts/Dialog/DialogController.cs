@@ -8,6 +8,8 @@ public class DialogController : MonoBehaviour
 {
     private static DialogController instance = null;
 
+    public GameObject image;
+
     public Text text;
     public TownManager townManager;
 
@@ -38,6 +40,8 @@ public class DialogController : MonoBehaviour
         {
             string filePathSuffix = "/Dialog/IntroDialogue_01.txt";
             string filePath = Application.streamingAssetsPath + filePathSuffix;
+
+            image.SetActive(true);
             LoadDialog(filePath);
             ExecuteDialog(dialogEvents[0]);
         }
@@ -160,6 +164,7 @@ public class DialogController : MonoBehaviour
 
     void Hide()
     {
+        image.SetActive(false);
         this.gameObject.SetActive(false);
     }
 }

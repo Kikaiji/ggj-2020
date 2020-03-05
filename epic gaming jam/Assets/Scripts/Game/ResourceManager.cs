@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
+//sets the resources in the town build menu, keep it updated
 public class ResourceManager : MonoBehaviour
 {
 
@@ -42,13 +42,18 @@ public class ResourceManager : MonoBehaviour
             resourcebox.transform.GetChild(i).GetComponent<Text>().text = resources[i].ToString();
         }
         //for(int i = 0; i < )
-        resourcebox.transform.GetChild(resources.Length).GetComponent<Text>().text = "5"; 
+        resourcebox.transform.GetChild(resources.Length).GetComponent<Text>().text = "5";
+        UpdateResources();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(resourcebox != null)
+        {
+            UpdateResources();
+        }
+        else { resourcebox = GameObject.Find("ResourceBox"); }
     }
 
     public bool CheckForResource(int id, int amount)
@@ -65,5 +70,13 @@ public class ResourceManager : MonoBehaviour
     bool CreateBuilding(int id)
     {
         return false;
+    }
+
+    void UpdateResources()
+    {
+        for (int i = 0; i < resources.Length; i++)
+        {
+            resourcebox.transform.GetChild(i).GetComponent<Text>().text = resources[i].ToString();
+        }
     }
 }

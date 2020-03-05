@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//moves the resource menu in and out
 public class MoveMenu : MonoBehaviour
 {
     GameObject parent;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//only quits the game right now
 public enum GameState { MENU, TOWN, TALK, VENTURE, BATTLE, SCENE}
 public class GameManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        //this makes sure there isnt a duplicate of the object this is attached to.
         if (instance == null)
             instance = this;
         else if (instance != this)
