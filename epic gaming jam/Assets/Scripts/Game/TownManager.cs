@@ -59,12 +59,13 @@ public class TownManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         //checks if each thing is active, tries to make sure that the references are still about
         print(SceneManager.GetActiveScene().name);
         if (townSprite == null) { townSprite = GameObject.Find("TownSprite"); }
-        if (SlimeO == null && SceneManager.GetActiveScene().name == "TownScene") { SlimeO = GameObject.Find("Slime"); print("find"); }
-        if (Goblin == null && SceneManager.GetActiveScene().name == "TownScene") { Goblin = GameObject.Find("Goblin"); print("find"); }
-        if (GhostO == null && SceneManager.GetActiveScene().name == "TownScene") { GhostO = GameObject.Find("Ghost"); print("find"); }
+        if (SlimeO == null && SceneManager.GetActiveScene().name == "TownScene") { SlimeO = GameObject.Find("Slime");  }
+        if (Goblin == null && SceneManager.GetActiveScene().name == "TownScene") { Goblin = GameObject.Find("Goblin");  }
+        if (GhostO == null && SceneManager.GetActiveScene().name == "TownScene") { GhostO = GameObject.Find("Ghost"); }
         if(SceneManager.GetActiveScene().name == "TownScene") townSprite.GetComponent<Image>().sprite = Resources.Load<Sprite>("Graphics/TownStates/nomadvillage_state" + gameState);
         
         if (Slime)
@@ -86,6 +87,8 @@ public class TownManager : MonoBehaviour
         {
             gameState += 1;
         }
+        
+
     }
 
     public bool BuildGarden()

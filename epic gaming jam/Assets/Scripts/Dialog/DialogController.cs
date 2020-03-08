@@ -11,25 +11,29 @@ public class DialogController : MonoBehaviour
     public GameObject image;
 
     public Text text;
+
     public TownManager townManager;
+    public string file;
 
     private IList<DialogEvent> dialogEvents;
     private int dialogIndex;
     private bool waitingForKeypress = false;
     private bool runningDialog = false;
     private bool skipDialog = false;
-    private GameObject activePortrait;
+    public GameObject activePortrait;
 
     public GameObject nomadPortrait;
 
     void Awake()
     {
+ 
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject);
+        
     }
     // Start is called before the first frame update
     void Start()
@@ -83,9 +87,9 @@ public class DialogController : MonoBehaviour
         }
     }
 
-    public static IList<DialogEvent> ParseFile(string filepath)
+    public static List<DialogEvent> ParseFile(string filepath)
     {
-        IList<DialogEvent> dialogEvents = new List<DialogEvent>();
+        List<DialogEvent> dialogEvents = new List<DialogEvent>();
         StreamReader reader = new StreamReader(filepath);
         while (!reader.EndOfStream)
         {
@@ -93,7 +97,7 @@ public class DialogController : MonoBehaviour
             if (line.Contains(":"))
             {
                 string[] person = line.Split(':');
-                dialogEvents.Add(new Dialog(person[0], line));
+                dialogEvents.Add(new Dialogs(person[0], line));
             }
             else if (line.StartsWith("#"))
             {
@@ -101,50 +105,54 @@ public class DialogController : MonoBehaviour
             }
             else if (line.StartsWith("("))
             {
-
+                //used as test suite intro_dialog_test.txt. Currently not used
             }
             else if (line.StartsWith("*"))
             {
-
+                //used as test suite i intro_dialog_test.txt. Currently not used
             }
             else
             {
                 Debug.Log("Can't parse line " + line); 
             }
 
-            //Debug.Log(line);
+            
         }
+        //print(dialogEvents.);
         reader.Close();
         return dialogEvents;
     }
 
     void ExecuteDialog(DialogEvent dialogEvent)
     {
-        if (dialogEvent is Dialog)
+        if (dialogEvent is Dialogs)
         {
-            StartCoroutine(RunDialog(dialogEvent as Dialog)); 
+            StartCoroutine(RunDialog(dialogEvent as Dialogs)); 
         }
     }
 
-    IEnumerator RunDialog(Dialog dialog)
+    IEnumerator RunDialog(Dialogs dialog)
     {
         runningDialog = true;
-        activePortrait = portraitForName(dialog.person);
+        activePortrait = portraitForName(dialog.Person);
         if (activePortrait != null)
         {
             activePortrait.SetActive(true);
         }
 
-        for (int j = 0; j < dialog.dialog.Length; j++)
+        
+        for (int j = 0; j <= dialog.Dialog.Length; j++)
         {
             if (skipDialog)
             {
-                j = dialog.dialog.Length - 1;
+                j = dialog.Dialog.Length - 1;
                 skipDialog = false;
             }
-            text.text = dialog.dialog.Substring(0, j);
+            text.text = dialog.Dialog.Substring(0, j);
             yield return new WaitForSeconds(0.05f);
         }
+        
+        
         waitingForKeypress = true;
         runningDialog = false;
     }
@@ -174,20 +182,53 @@ public class DialogEvent
 
 }
 
-public class Dialog : DialogEvent
+public class Dialogs : DialogEvent
 {
-    public string person;
-    public string dialog;
-    public Dialog(string person, string dialog)
+
+    private string person;
+    private string dialog;
+
+
+    public Dialogs(string person, string dialog)
     {
         this.person = person;
         this.dialog = dialog;
+    }
+
+    //Create getter and setters for variable Person
+    public string Person
+    {
+        get
+        {
+            //Some other code
+            return person;
+        }
+        set
+        {
+            //Some other code
+            person = value;
+        }
+    }
+
+    //Create getter and setters for variable Dialog
+    public string Dialog
+    {
+        get
+        {
+            //Some other code
+            return dialog;
+        }
+        set
+        {
+            //Some other code
+            dialog = value;
+        }
     }
 }
 
 public class Action : DialogEvent
 {
-    public string action;
+    private string action;
     public Action(string action)
     {
         this.action = action;

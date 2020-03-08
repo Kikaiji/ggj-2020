@@ -6,13 +6,16 @@ using UnityEngine.SceneManagement;
 
 // a lot
 public enum BattleState { START, PLAYERTURN, ALLYTURN, ENEMYTURN, PROCESSING, WON, LOST}
+
 public class BattleManager : MonoBehaviour
 {
+    
     int enemyID;
     bool tutorial;
     Database database;
+    Stats stats;
     GameManager manager;
-    GameObject dCanvas;
+    //GameObject dCanvas;
     ResourceManager rManager;
     PlayerController pcontroller;
 
@@ -46,22 +49,39 @@ public class BattleManager : MonoBehaviour
     public BattleState state;
     public void Start()
     {
-        AllyAction = GameObject.Find("Ally Action Box");
-        PlayerAction = GameObject.Find("Player Action Box");
-        database = GameObject.Find("Database").GetComponent<Database>();
-        rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
-        tutorial = tManager.tutorial;
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
-        enemyID = pcontroller.enemyID;
-        enemypositions = GameObject.Find("EnemyGrid");
         state = BattleState.START;
+        //AllyAction = GameObject.Find("Ally Action Box");
+        //PlayerAction = GameObject.Find("Nomad Box");
+        //database = GameObject.Find("Database").GetComponent<Database>();
+        /// <summary>
+        /// Must not have a parent in the Hierarchy view. Both allyaction and playeraction are children of Canvas.
+        /// </summary>
+
+
+        //database = GameObject.Find("Database").GetComponent<Database>();
+        
+
+        //rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
+        Debug.Log("I am past State rmanger");
+
+        //tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
+        //tutorial = tManager.tutorial;
+        
+        //manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
+        //enemyID = pcontroller.enemyID;
+        //enemypositions = GameObject.Find("EnemyGrid");
+        //state = BattleState.START;
+        
         StartCoroutine(SetUpBattle());
     }
 
+
     void Update()
     {
+        OnAttackButton();
+
+
         if (state == BattleState.PLAYERTURN)
         {
             PlayerAction.SetActive(true);
@@ -74,20 +94,20 @@ public class BattleManager : MonoBehaviour
         }
         else
         {
-            PlayerAction.SetActive(false);
-            AllyAction.SetActive(false);
+            //PlayerAction.SetActive(false);
+            //AllyAction.SetActive(false);
         }
     }
 
     IEnumerator SetUpBattle()
     {
+        Debug.Log("I am in SetUpbattle");
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
-        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
+        //if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         playerUnit = playerGO.GetComponent<Unit>();
         GameObject enemyGO = Instantiate(enemyPrefab);
-        enemyUnit = enemyGO.GetComponent<Unit>();
         Enemy enemy = database.FetchEnemyByID(enemyID);
-
+       
         enemyUnit.Attack = enemy.Stats.Attack;
         enemyUnit.Defense = enemy.Stats.Defense;
         enemyUnit.Speed = enemy.Stats.Speed;
@@ -131,7 +151,7 @@ public class BattleManager : MonoBehaviour
 
     void PlayerTurn()
     {
-        PlayerAction.SetActive(true);
+        //PlayerAction.SetActive(true);
         consoleText.text = "Choose an Action: ";
     }
 
@@ -161,10 +181,11 @@ public class BattleManager : MonoBehaviour
 
     public void OnRunButton()
     {
-        if (state != BattleState.PLAYERTURN || (tutorial == true))
-            return;
+        
+        //if (state != BattleState.PLAYERTURN || (tutorial == true))
+           // return;
 
-        StartCoroutine(PlayerRun());
+        PlayerRun();
     }
 
     IEnumerator EndBattle()
@@ -211,6 +232,7 @@ public class BattleManager : MonoBehaviour
 
     IEnumerator PlayerAttack()
     {
+        Debug.Log("I am in attack function");
         if (state == BattleState.PLAYERTURN)
         {
             state = BattleState.PROCESSING;
@@ -240,6 +262,7 @@ public class BattleManager : MonoBehaviour
     {
         if (state == BattleState.PLAYERTURN)
         {
+            Debug.Log("I am in playerturn");
             if (playerUnit.CurrentMP < 3)
             {
                 state = BattleState.PROCESSING;
@@ -286,17 +309,19 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    IEnumerator PlayerRun()
+    void PlayerRun()
     {
+        Debug.Log("I am in run function");
         state = BattleState.PROCESSING;
-        for (int i = 0; i < rManager.resources.Length; i++)
-        {
-            rManager.resources[i] = (rManager.resources[i] * 3) / 4;
-        }
+        Debug.Log(state);
+        //for (int i = 0; i < rManager.resources.Length; i++)
+        //{
+            //rManager.resources[i] = (rManager.resources[i] * 3) / 4;
+        //}
         consoleText.text = "You ran away!";
-        yield return new WaitForSeconds(2f);
-        SceneManager.UnloadSceneAsync("DungeonScene");
-        SceneManager.UnloadSceneAsync("BattleScene");
+        
+        //SceneManager.UnloadSceneAsync("DungeonScene");
+        //SceneManager.UnloadSceneAsync("BattleScene");
         SceneManager.LoadSceneAsync("TownScene");
     }
 

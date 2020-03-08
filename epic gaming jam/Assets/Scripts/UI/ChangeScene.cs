@@ -14,12 +14,12 @@ public class ChangeScene : MonoBehaviour
 
     void Start()
     {
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //manager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     public void ButtonClick()
     {
-        manager.state = StatetoLoad;
+        //manager.state = StatetoLoad;
         SceneManager.LoadScene(ToLoad);
     }
 }

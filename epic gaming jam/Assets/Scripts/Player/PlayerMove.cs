@@ -28,7 +28,7 @@ public class PlayerMove : MonoBehaviour
             Vector3 mousepos = Input.mousePosition;
             mousepos = Camera.main.ScreenToWorldPoint(mousepos);
             pos = new Vector3(mousepos.x, mousepos.y, transform.position.z);
-            
+
         }
         transform.position = Vector3.MoveTowards(transform.position, pos, speed * Time.deltaTime);
     }

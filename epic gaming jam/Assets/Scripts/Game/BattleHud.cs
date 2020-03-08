@@ -22,6 +22,7 @@ public class BattleHud : MonoBehaviour
         }
     }
 
+    
     //refreshes the mp/hp bars
     public void SetHp(int hp)
     {

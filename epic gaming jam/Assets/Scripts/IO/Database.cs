@@ -20,10 +20,12 @@ public class Database : MonoBehaviour
         allyData = JsonMapper.ToObject(File.ReadAllText(Application.streamingAssetsPath + "/IO/ally.json"));
         ConstructEnemyDatabase();
         ConstructAllyDatabase();
+        
     }
 
     public Enemy FetchEnemyByID(int id)
     {
+        
         for(int i = 0; i < eDatabase.Count; i++)
         {
             if (eDatabase[i].ID == id) return eDatabase[i];
@@ -39,12 +41,12 @@ public class Database : MonoBehaviour
         return null;
     }
 
-    void ConstructEnemyDatabase()
+    public void ConstructEnemyDatabase()
     {
+         
         for (int i = 0; i < enemyData.Count; i++)
         {
-            Stats stats = new Stats(
-                (int)enemyData[i]["stats"]["attack"],
+            Stats stats = new Stats((int)enemyData[i]["stats"]["attack"],
                 (int)enemyData[i]["stats"]["defence"],
                 (int)enemyData[i]["stats"]["speed"],
                 (int)enemyData[i]["stats"]["health"],

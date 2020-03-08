@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 1
 --- !u!196 &4
@@ -809,6 +810,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1851,6 +1853,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2082,7 +2085,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 304.2, y: 700}
+  m_AnchoredPosition: {x: 304.25, y: 700}
   m_SizeDelta: {x: 608.3, y: 608.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1708176132
@@ -2172,6 +2175,7 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2496,7 +2500,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 1.5, y: 201.4}
+  m_AnchoredPosition: {x: 1.5, y: 201.5}
   m_SizeDelta: {x: -49.9, y: 356}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1608739657011519075
@@ -2572,6 +2576,7 @@ MonoBehaviour:
   image: {fileID: 1731885918}
   text: {fileID: 1608739657011519084}
   townManager: {fileID: 1096800306}
+  file: 
   nomadPortrait: {fileID: 1708176130}
 --- !u!1 &1608739657409434809
 GameObject:
@@ -2621,7 +2626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -387.1, y: 57.7}
+  m_AnchoredPosition: {x: -387, y: 57.75}
   m_SizeDelta: {x: 727.3, y: 68.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &5832258025488239232
