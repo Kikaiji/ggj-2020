@@ -9,9 +9,9 @@ using System.IO;
 public class Database : MonoBehaviour
 {
     // Start is called before the first frame update
-    private List<Enemy> eDatabase = new List<Enemy>();
+    private IList<Enemy> eDatabase;
     private JsonData enemyData;
-    private List<Ally> aDatabase = new List<Ally>();
+    private IList<Ally> aDatabase;
     private JsonData allyData;
     void Start()
     {
@@ -21,7 +21,9 @@ public class Database : MonoBehaviour
         ConstructEnemyDatabase();
         ConstructAllyDatabase();
         
+
     }
+
 
     public Enemy FetchEnemyByID(int id)
     {

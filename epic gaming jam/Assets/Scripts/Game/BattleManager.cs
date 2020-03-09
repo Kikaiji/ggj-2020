@@ -15,7 +15,8 @@ public class BattleManager : MonoBehaviour
     Database database;
     Stats stats;
     GameManager manager;
-    //GameObject dCanvas;
+    GameObject dCanvas;
+     
     ResourceManager rManager;
     PlayerController pcontroller;
 
@@ -28,8 +29,8 @@ public class BattleManager : MonoBehaviour
     public GameObject enemyPrefab2;
     public GameObject enemyPrefab3;
 
-    GameObject AllyAction;
-    GameObject PlayerAction;
+    public GameObject AllyAction;
+    public GameObject PlayerAction;
 
     public GameObject enemypositions;
     public GameObject[] enemies = new GameObject[9];
@@ -49,9 +50,11 @@ public class BattleManager : MonoBehaviour
     public BattleState state;
     public void Start()
     {
+        //Database database = gameObject.AddComponent<Database>();
         state = BattleState.START;
-        //AllyAction = GameObject.Find("Ally Action Box");
-        //PlayerAction = GameObject.Find("Nomad Box");
+        
+        //AllyAction = GameObject.Find("Canvas/Player Action Box");
+        //PlayerAction = GameObject.Find("Canvas/Ally Action Box");
         //database = GameObject.Find("Database").GetComponent<Database>();
         /// <summary>
         /// Must not have a parent in the Hierarchy view. Both allyaction and playeraction are children of Canvas.
@@ -61,8 +64,7 @@ public class BattleManager : MonoBehaviour
         //database = GameObject.Find("Database").GetComponent<Database>();
         
 
-        //rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
-        Debug.Log("I am past State rmanger");
+        //rManager = GameObject.Find("ResourceManager").GetComponent<
 
         //tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
         //tutorial = tManager.tutorial;
@@ -72,70 +74,79 @@ public class BattleManager : MonoBehaviour
         //enemyID = pcontroller.enemyID;
         //enemypositions = GameObject.Find("EnemyGrid");
         //state = BattleState.START;
-        
-        StartCoroutine(SetUpBattle());
+        SetUpBattle();
     }
 
 
     void Update()
     {
-        OnAttackButton();
+        //OnAttackButton();
 
 
         if (state == BattleState.PLAYERTURN)
         {
-            PlayerAction.SetActive(true);
-            AllyAction.SetActive(false);
+            PlayerAction.gameObject.SetActive(true);
+            AllyAction.gameObject.SetActive(false);
+            print("i am update, first if statment");
         }
         else if (state == BattleState.ALLYTURN)
         {
-            PlayerAction.SetActive(false);
-            AllyAction.SetActive(true);
+            PlayerAction.gameObject.SetActive(false);
+            AllyAction.gameObject.SetActive(true);
+            print("i am update, second if statment");
+            //AllyAttack();
+
+
         }
         else
         {
-            //PlayerAction.SetActive(false);
-            //AllyAction.SetActive(false);
+            PlayerAction.gameObject.SetActive(false);
+            AllyAction.gameObject.SetActive(false);
+
         }
     }
 
-    IEnumerator SetUpBattle()
+    void SetUpBattle()
     {
         Debug.Log("I am in SetUpbattle");
-        GameObject playerGO = Instantiate(playerPrefab, playerStation);
+        //GameObject playerGO = Instantiate(playerPrefab, playerStation);
         //if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
-        playerUnit = playerGO.GetComponent<Unit>();
-        GameObject enemyGO = Instantiate(enemyPrefab);
-        Enemy enemy = database.FetchEnemyByID(enemyID);
+        //playerUnit = playerGO.GetComponent<Unit>();
+        //GameObject enemyGO = Instantiate(enemyPrefab);
+        //Enemy enemy = database.FetchEnemyByID(enemyID);
+
        
-        enemyUnit.Attack = enemy.Stats.Attack;
+        /*enemyUnit.Attack = enemy.Stats.Attack;
         enemyUnit.Defense = enemy.Stats.Defense;
         enemyUnit.Speed = enemy.Stats.Speed;
         enemyUnit.unitName = enemy.Name;
         enemyUnit.MaxHP = enemy.Stats.Health;
         enemyUnit.MaxMP = enemy.Stats.Mana;
-
+        */
+        /*
         for (int i = 0; i < enemies.Length; i++)
         {
             if(enemies[i] != null)
             {
-                enemyGO.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/EnemySprites/" + enemy.Slug);
+                //enemyGO.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Graphics/EnemySprites/" + enemy.Slug);
             }
         }
+        */
+        //consoleText.text = "A " + enemyUnit.unitName + " Approaches";
 
-        consoleText.text = "A " + enemyUnit.unitName + " Approaches";
-
-        playerHud.SetHUD(playerUnit);
-        enemyHud.SetHUD(enemyUnit);
-        yield return new WaitForSeconds(2f);
+        //playerHud.SetHUD(playerUnit);
+        //enemyHud.SetHUD(enemyUnit);
+        //yield return new WaitForSeconds(2f);
 
         state = BattleState.PLAYERTURN;
-        if( playerUnit.Speed >= enemyUnit.Speed) { PlayerTurn(); }
-        else { EnemyAttack(); }
+        print(state);
+        PlayerTurn();
+        //if( playerUnit.Speed >= enemyUnit.Speed) { PlayerTurn(); }
+        //else { EnemyAttack(); }
 
     }
 
-    void SetEnemyPosition(GameObject enemy)
+    /*void SetEnemyPosition(GameObject enemy)
     {
         bool state = false;
         if (!state)
@@ -148,8 +159,9 @@ public class BattleManager : MonoBehaviour
             }
         }
     }
+    */
 
-    void PlayerTurn()
+    public void PlayerTurn()
     {
         //PlayerAction.SetActive(true);
         consoleText.text = "Choose an Action: ";
@@ -157,10 +169,22 @@ public class BattleManager : MonoBehaviour
 
     public void OnAttackButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
+       
+        
+            PlayerAttack();
+            print("I am back in onattackbutton");
+            
+        
+    }
 
-        StartCoroutine(PlayerAttack());
+    public void OnAllyAttackButton()
+    {
+
+
+        AllyAttack();
+        print("I am back in onattackbutton");
+
+
     }
 
     public void OnHealButton()
@@ -173,10 +197,10 @@ public class BattleManager : MonoBehaviour
 
     public void OnAssistButton()
     {
-        if (state != BattleState.PLAYERTURN)
-            return;
+        //if (state != BattleState.PLAYERTURN)
+            //return;
 
-        StartCoroutine(AllyAttack());
+        AllyAttack();
     }
 
     public void OnRunButton()
@@ -188,14 +212,17 @@ public class BattleManager : MonoBehaviour
         PlayerRun();
     }
 
-    IEnumerator EndBattle()
+    void EndBattle()
     {
         if(state == BattleState.WON)
         {
-            consoleText.text = "You've defeated the " + enemyUnit.unitName + "!";
-            yield return new WaitForSeconds(3f);
-            manager.state = GameState.VENTURE;
-            switch (enemyID)
+            consoleText.text = "You've defeated the "; 
+            //yield return new WaitForSeconds(3f);
+            //manager.state = GameState.VENTURE;
+            //SceneManager.UnloadSceneAsync("BattleScene");
+            //SceneManager.UnloadSceneAsync("DungeonScene");
+            SceneManager.LoadSceneAsync("TownScene");
+           /*(switch (enemyID)
             {
                 case 0:
                     tManager.Slime = true;
@@ -214,49 +241,59 @@ public class BattleManager : MonoBehaviour
                 SceneManager.UnloadSceneAsync("BattleScene");
                 SceneManager.UnloadSceneAsync("DungeonScene");
                 SceneManager.LoadSceneAsync("TownScene");
-                playerUnit.CurrentMP = playerUnit.MaxMP;
-                playerUnit.CurrentHP = playerUnit.MaxHP;
+                //playerUnit.CurrentMP = playerUnit.MaxMP;
+               // playerUnit.CurrentHP = playerUnit.MaxHP;
             }
-            else { playerUnit.CurrentHP += ((playerUnit.MaxHP / 10) * 3); SceneManager.UnloadSceneAsync("BattleScene"); }
+            //else { playerUnit.CurrentHP += ((playerUnit.MaxHP / 10) * 3); SceneManager.UnloadSceneAsync("BattleScene"); }
             
         }else if (state == BattleState.LOST)
         {
             consoleText.text = "You've been defeated by the " + enemyUnit.unitName + "!";
             playerUnit.CurrentMP = playerUnit.MaxMP;
             playerUnit.CurrentHP = playerUnit.MaxHP;
-            yield return new WaitForSeconds(3f);
+            //yield return new WaitForSeconds(3f);
             manager.state = GameState.TOWN;
             SceneManager.LoadSceneAsync("TownScene");
+            */
         }
     }
 
-    IEnumerator PlayerAttack()
+    void PlayerAttack()
     {
         Debug.Log("I am in attack function");
+        consoleText.text = "You attacked";
         if (state == BattleState.PLAYERTURN)
         {
-            state = BattleState.PROCESSING;
-            playerUnit.anim.Play("NomadBattleAnim");
-            bool isdead = enemyUnit.TakeDamage(playerUnit.Attack);
-            yield return new WaitForSeconds(1f);
-            enemyHud.SetHp(enemyUnit.CurrentHP);
-            consoleText.text = enemyUnit.unitName + " took " + playerUnit.Attack + "damage!";
-            yield return new WaitForSeconds(2f);
-            enemyHud.SetHp(enemyUnit.CurrentHP);
-            playerHud.SetMp(playerUnit.CurrentMP);
+            
+            Debug.Log("I am past PlayerAttack");
+            print(state);
 
-            if (isdead)
-            {
-                state = BattleState.WON;
-                StartCoroutine(EndBattle());
-            }
-            else
-            {
-                state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyAttack());
-            }
+        //playerUnit.anim.Play("NomadBattleAnim");
+        //bool isdead = enemyUnit.TakeDamage(playerUnit.Attack);
+        //yield return new WaitForSeconds(1f);
+        //enemyHud.SetHp(enemyUnit.CurrentHP);
+        //consoleText.text = /*enemyUnit.unitName +*/ " took " + /*playerUnit.Attack + */ "damage!";
+        //yield return new WaitForSeconds(2f);
+        //enemyHud.SetHp(enemyUnit.CurrentHP);
+        //playerHud.SetMp(playerUnit.CurrentMP);
+
+        //if (isdead)
+        //{
+        //state = BattleState.WON;
+        //StartCoroutine(EndBattle());
+        //}
+        //else
+        //{
+        //state = BattleState.ENEMYTURN;
+        //StartCoroutine(EnemyAttack());
+        // }
         }
+        EnemyAttack();
+
     }
+
+
+
 
     IEnumerator PlayerHeal()
     {
@@ -268,45 +305,52 @@ public class BattleManager : MonoBehaviour
                 state = BattleState.PROCESSING;
                 bool y = playerUnit.Heal(playerUnit.Defense, 3);
                 if (y) { consoleText.text = "The move was successful!"; }
-                playerHud.SetHp(playerUnit.CurrentHP);
-                playerHud.SetMp(playerUnit.CurrentMP);
+                //playerHud.SetHp(playerUnit.CurrentHP);
+                //.SetMp(playerUnit.CurrentMP);
 
                 yield return new WaitForSeconds(2f);
 
                 state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyAttack());
+                EnemyAttack();
             }
         }
     }
 
-    IEnumerator AllyAttack()
+    void AllyAttack()
     {
         print("goblin");
+        Debug.Log("I am in AllyAttack");
+        consoleText.text = "Ally attacked";
+        state = BattleState.PLAYERTURN;
+        
+
+        /*
         if (state == BattleState.PLAYERTURN && tManager.Gardener == true)
         {
             state = BattleState.PROCESSING;
-            playerUnit.anim.Play("NomadBattleAnim");
-            bool isdead = enemyUnit.TakeDamage(playerUnit.Attack * 2);
-            playerUnit.TakeMP(4);
-            playerHud.SetMp(playerUnit.CurrentMP);
-            yield return new WaitForSeconds(0.5f);
-            enemyHud.SetHp(enemyUnit.CurrentHP);
-            consoleText.text = enemyUnit.unitName + " took " + playerUnit.Attack + "damage!";
-            yield return new WaitForSeconds(1f);
-            enemyHud.SetHp(enemyUnit.CurrentHP);
+            //playerUnit.anim.Play("NomadBattleAnim");
+           // bool isdead = enemyUnit.TakeDamage(playerUnit.Attack * 2);
+            //playerUnit.TakeMP(4);
+            //playerHud.SetMp(playerUnit.CurrentMP);
+            //yield return new WaitForSeconds(0.5f);
+            //enemyHud.SetHp(enemyUnit.CurrentHP);
+            //consoleText.text = enemyUnit.unitName + " took " + playerUnit.Attack + "damage!";
+            //yield return new WaitForSeconds(1f);
+           // enemyHud.SetHp(enemyUnit.CurrentHP);
             
 
             if (isdead)
             {
                 state = BattleState.WON;
-                StartCoroutine(EndBattle());
+                //StartCoroutine(EndBattle());
             }
             else
             {
                 state = BattleState.ENEMYTURN;
-                StartCoroutine(EnemyAttack());
+                EnemyAttack();
             }
         }
+        */
     }
 
     void PlayerRun()
@@ -325,16 +369,17 @@ public class BattleManager : MonoBehaviour
         SceneManager.LoadSceneAsync("TownScene");
     }
 
-    IEnumerator EnemyAttack()
+    void EnemyAttack()
     {
-        state = BattleState.PROCESSING;
-        consoleText.text = enemyUnit.unitName + " attacks!";
-        yield return new WaitForSeconds(1f);
-        bool isDead = playerUnit.TakeDamage(enemyUnit.Attack);
-        playerHud.SetHp(playerUnit.CurrentHP);
-        yield return new WaitForSeconds(1f);
+        Debug.Log("I am in enemyAttack")
+;       state = BattleState.PROCESSING;
+        consoleText.text = "attacks!";
+        //yield return new WaitForSeconds(1f);
+        //bool isDead = playerUnit.TakeDamage(enemyUnit.Attack);
+        //playerHud.SetHp(playerUnit.CurrentHP);
+        //yield return new WaitForSeconds(1f);
 
-        if (isDead)
+        /*if (isDead)
         {
             state = BattleState.LOST;
             StartCoroutine(EndBattle());
@@ -344,5 +389,8 @@ public class BattleManager : MonoBehaviour
             state = BattleState.PLAYERTURN;
             consoleText.text = "Choose an Option:";
         }
+        */
+        state = BattleState.ALLYTURN;
+        //EndBattle(); 
     }
 }

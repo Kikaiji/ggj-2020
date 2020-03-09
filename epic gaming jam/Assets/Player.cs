@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    /*   
     public int maxHealth = 100;
 
     public int currenthealth;
@@ -50,5 +51,5 @@ public class Player : MonoBehaviour
         currentMp -= damage;
         mpbar.SetMp(currentMp);
     }
-
+    */
 }

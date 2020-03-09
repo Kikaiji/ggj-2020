@@ -5,16 +5,16 @@ using UnityEngine.UI;
 
 public class BattleHud : MonoBehaviour
 {
-    //grabs the unit's hp and mp, sets the hud for that unit
+    /*//grabs the unit's hp and mp, sets the hud for that unit
     public Text nameText;
     public Slider hpSlider;
     public Slider mpSlider;
 
     public void SetHUD(Unit unit)
     {
-        nameText.text = unit.unitName;
-        hpSlider.maxValue = unit.MaxHP;
-        hpSlider.value = unit.CurrentHP;
+        //nameText.text = unit.unitName;
+        //hpSlider.maxValue = unit.MaxHP;
+        //hpSlider.value = unit.CurrentHP;
         if(mpSlider != null)
         {
             mpSlider.maxValue = unit.MaxMP;
@@ -35,4 +35,5 @@ public class BattleHud : MonoBehaviour
             mpSlider.value = mp;
         }
     }
+    */
 }

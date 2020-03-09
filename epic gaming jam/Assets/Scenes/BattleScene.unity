@@ -561,9 +561,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 1893747338}
-  hpSlider: {fileID: 927455663}
-  mpSlider: {fileID: 1451094490}
 --- !u!1 &271851276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1992,7 +1989,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2008,9 +2005,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  hpSlider: {fileID: 927455663}
-  mpSlider: {fileID: 1451094490}
 --- !u!1 &932590195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2262,9 +2256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 1975115180}
-  hpSlider: {fileID: 933500885}
-  mpSlider: {fileID: 0}
 --- !u!1 &1046717607
 GameObject:
   m_ObjectHideFlags: 0
@@ -3383,9 +3374,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nameText: {fileID: 0}
-  hpSlider: {fileID: 927455663}
-  mpSlider: {fileID: 1451094490}
 --- !u!1 &1555687233
 GameObject:
   m_ObjectHideFlags: 0

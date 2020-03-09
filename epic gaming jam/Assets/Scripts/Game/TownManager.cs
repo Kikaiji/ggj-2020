@@ -61,7 +61,7 @@ public class TownManager : MonoBehaviour
     {
         
         //checks if each thing is active, tries to make sure that the references are still about
-        print(SceneManager.GetActiveScene().name);
+        //print(SceneManager.GetActiveScene().name);
         if (townSprite == null) { townSprite = GameObject.Find("TownSprite"); }
         if (SlimeO == null && SceneManager.GetActiveScene().name == "TownScene") { SlimeO = GameObject.Find("Slime");  }
         if (Goblin == null && SceneManager.GetActiveScene().name == "TownScene") { Goblin = GameObject.Find("Goblin");  }
