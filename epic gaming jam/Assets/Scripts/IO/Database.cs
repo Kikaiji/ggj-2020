@@ -13,6 +13,7 @@ public class Database : MonoBehaviour
     private JsonData enemyData;
     private IList<Ally> aDatabase;
     private JsonData allyData;
+   
     void Start()
     {
         GameObject.DontDestroyOnLoad(this);
@@ -64,6 +65,7 @@ public class Database : MonoBehaviour
                 enemyData[i]["slug"].ToString()
                 ));
         }
+        print(enemyData[0]);
     }
     void ConstructAllyDatabase()
     {

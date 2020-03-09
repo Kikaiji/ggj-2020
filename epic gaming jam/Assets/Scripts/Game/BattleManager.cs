@@ -12,7 +12,6 @@ public class BattleManager : MonoBehaviour
     
     int enemyID;
     bool tutorial;
-    Database database;
     Stats stats;
     GameManager manager;
     GameObject dCanvas;
@@ -21,7 +20,7 @@ public class BattleManager : MonoBehaviour
     PlayerController pcontroller;
 
     TownManager tManager;
-
+    Database database;
     public bool ally;
     public GameObject allyPrefab;
     public GameObject playerPrefab;
@@ -48,33 +47,41 @@ public class BattleManager : MonoBehaviour
     public Text consoleText;
 
     public BattleState state;
+
+    void Awake()
+    {
+        database = GetComponent<Database>();
+        //Debug.Log(database.playerScore);
+    }
     public void Start()
     {
         //Database database = gameObject.AddComponent<Database>();
         state = BattleState.START;
-        
-        //AllyAction = GameObject.Find("Canvas/Player Action Box");
-        //PlayerAction = GameObject.Find("Canvas/Ally Action Box");
-        //database = GameObject.Find("Database").GetComponent<Database>();
-        /// <summary>
-        /// Must not have a parent in the Hierarchy view. Both allyaction and playeraction are children of Canvas.
-        /// </summary>
+        Debug.Log(database);
+    
+
+    //AllyAction = GameObject.Find("Canvas/Player Action Box");
+    //PlayerAction = GameObject.Find("Canvas/Ally Action Box");
+
+    /// <summary>
+    /// Must not have a parent in the Hierarchy view. Both allyaction and playeraction are children of Canvas.
+    /// </summary>
 
 
-        //database = GameObject.Find("Database").GetComponent<Database>();
-        
+    //database = GameObject.Find("Database").GetComponent<Database>();
 
-        //rManager = GameObject.Find("ResourceManager").GetComponent<
 
-        //tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
-        //tutorial = tManager.tutorial;
-        
-        //manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
-        //enemyID = pcontroller.enemyID;
-        //enemypositions = GameObject.Find("EnemyGrid");
-        //state = BattleState.START;
-        SetUpBattle();
+    //rManager = GameObject.Find("ResourceManager").GetComponent<
+
+    //tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
+    //tutorial = tManager.tutorial;
+
+    //manager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    //pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
+    //enemyID = pcontroller.enemyID;
+    //enemypositions = GameObject.Find("EnemyGrid");
+    //state = BattleState.START;
+    SetUpBattle();
     }
 
 
@@ -109,13 +116,16 @@ public class BattleManager : MonoBehaviour
     void SetUpBattle()
     {
         Debug.Log("I am in SetUpbattle");
-        //GameObject playerGO = Instantiate(playerPrefab, playerStation);
+        GameObject playerGO = Instantiate(playerPrefab, playerStation);
+        GameObject allyGO = Instantiate(allyPrefab, playerStation);
+        allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f);
         //if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
-        //playerUnit = playerGO.GetComponent<Unit>();
-        //GameObject enemyGO = Instantiate(enemyPrefab);
+        playerUnit = playerGO.GetComponent<Unit>();
+        GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
         //Enemy enemy = database.FetchEnemyByID(enemyID);
+        
 
-       
+
         /*enemyUnit.Attack = enemy.Stats.Attack;
         enemyUnit.Defense = enemy.Stats.Defense;
         enemyUnit.Speed = enemy.Stats.Speed;
