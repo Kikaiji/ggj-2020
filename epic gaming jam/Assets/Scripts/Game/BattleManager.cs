@@ -51,37 +51,20 @@ public class BattleManager : MonoBehaviour
     void Awake()
     {
         database = GetComponent<Database>();
-        //Debug.Log(database.playerScore);
+        rManager = GetComponent<ResourceManager>();
+        tManager = GetComponent<TownManager>();
+        manager = GetComponent<GameManager>();
+        pcontroller = GetComponent<PlayerController>();
     }
     public void Start()
     {
-        //Database database = gameObject.AddComponent<Database>();
+        
         state = BattleState.START;
-        Debug.Log(database);
-    
-
-    //AllyAction = GameObject.Find("Canvas/Player Action Box");
-    //PlayerAction = GameObject.Find("Canvas/Ally Action Box");
-
-    /// <summary>
-    /// Must not have a parent in the Hierarchy view. Both allyaction and playeraction are children of Canvas.
-    /// </summary>
-
-
-    //database = GameObject.Find("Database").GetComponent<Database>();
-
-
-    //rManager = GameObject.Find("ResourceManager").GetComponent<
-
-    //tManager = GameObject.Find("TownManager").GetComponent<TownManager>();
-    //tutorial = tManager.tutorial;
-
-    //manager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    //pcontroller = GameObject.Find("Player").GetComponent<PlayerController>();
-    //enemyID = pcontroller.enemyID;
-    //enemypositions = GameObject.Find("EnemyGrid");
-    //state = BattleState.START;
-    SetUpBattle();
+        tutorial = tManager.tutorial;
+        //enemyID = pcontroller.enemyID;
+        //enemypositions = GameObject.Find("EnemyGrid");
+        //state = BattleState.START;
+        SetUpBattle();
     }
 
 
@@ -117,13 +100,12 @@ public class BattleManager : MonoBehaviour
     {
         Debug.Log("I am in SetUpbattle");
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
-        GameObject allyGO = Instantiate(allyPrefab, playerStation);
-        allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f);
-        //if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
+        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
         playerUnit = playerGO.GetComponent<Unit>();
         GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
         //Enemy enemy = database.FetchEnemyByID(enemyID);
-        
+        //database.ConstructAllyDatabase();
+
 
 
         /*enemyUnit.Attack = enemy.Stats.Attack;

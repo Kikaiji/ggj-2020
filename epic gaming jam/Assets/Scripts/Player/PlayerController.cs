@@ -21,12 +21,14 @@ public class PlayerController : MonoBehaviour
 
     // Start is called before the first frame update
     Vector3 pos;                                // For movement
-    float speed = 5f;                         // Speed of movement
-
+    float speed = 5f;     // Speed of movement
+    void Awake()
+    {
+        manager = GetComponent<GameManager>();
+    }
     void Start()
     {
         //dCanvas = GameObject.Find("DungeonCanvas");
-        manager = GameObject.Find("GameManager").GetComponent<GameManager>();
         eventText.text = "Started an Expedition!";
         rManager = GameObject.Find("ResourceManager").GetComponent<ResourceManager>();
         layerMask = LayerMask.GetMask("Wall", "Tile");

@@ -21,6 +21,7 @@ public class Database : MonoBehaviour
         allyData = JsonMapper.ToObject(File.ReadAllText(Application.streamingAssetsPath + "/IO/ally.json"));
         ConstructEnemyDatabase();
         ConstructAllyDatabase();
+        print(allyData);
         
 
     }
@@ -67,7 +68,7 @@ public class Database : MonoBehaviour
         }
         print(enemyData[0]);
     }
-    void ConstructAllyDatabase()
+    public void ConstructAllyDatabase()
     {
         for (int i = 0; i < allyData.Count; i++)
         {
@@ -96,6 +97,7 @@ public class Database : MonoBehaviour
                 enemyData[i]["slug"].ToString()
                 )) ;
         }
+        print(enemyData[0]);
     }
 }
 

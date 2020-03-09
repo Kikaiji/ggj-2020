@@ -16,6 +16,7 @@ public class ResourceManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        tmanager = GetComponent<TownManager>();
         DontDestroyOnLoad(gameObject);
 
         if (playerInstance == null)
@@ -29,7 +30,7 @@ public class ResourceManager : MonoBehaviour
     }
     void Start()
     {
-        tmanager = GameObject.Find("TownManager").GetComponent<TownManager>();
+        
         resourcebox = GameObject.Find("ResourceBox");
         DontDestroyOnLoad(gameObject);
         for(int i = 0; i < 3; i++)
