@@ -64,6 +64,7 @@
      <Compile Include="Assets\Scripts\Game\BattleManager.cs" />
      <Compile Include="Assets\Scripts\Game\EnemyTile.cs" />
      <Compile Include="Assets\Scripts\Game\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Game\NewDataBase.cs" />
      <Compile Include="Assets\Scripts\Game\ResourceManager.cs" />
      <Compile Include="Assets\Scripts\Game\TownManager.cs" />
      <Compile Include="Assets\Scripts\Game\Unit.cs" />

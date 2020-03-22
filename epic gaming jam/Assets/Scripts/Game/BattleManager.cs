@@ -58,7 +58,8 @@ public class BattleManager : MonoBehaviour
     }
     public void Start()
     {
-        
+        DontDestroyOnLoad(PlayerAction);
+        DontDestroyOnLoad(AllyAction);
         state = BattleState.START;
         tutorial = tManager.tutorial;
         //enemyID = pcontroller.enemyID;

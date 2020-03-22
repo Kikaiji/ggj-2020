@@ -1,23 +1,13 @@
-[
-    {
-        "id": 0,
-        "title": "Fabio",
-        "stats": {
-            "attack": 5,
-            "defence": 5,
-            "speed": 5,
-            "health": 10,
-            "mana": 0
-        },
-        "ability":{
-            "power": 10,
-            "cost": 4,
-            "name": "Potato Pummel",
-            "type": 0
-        },
-        "stage": 0,
-        "level": 1,
-        "type": 0,
-        "slug": "ally_goblin"
-    }
-]
+{
+	"allies": [{
+		"id": 0,
+		"title": "Fabio",
+		"stats": [5,5,5,10,0],
+		"ability": [10,4,0],
+		"stage": 0,
+		"level": 1,
+		"type": 0,
+		"slug": "ally_goblin"
+	}
+	]
+}

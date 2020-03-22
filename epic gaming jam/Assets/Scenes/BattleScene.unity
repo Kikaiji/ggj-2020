@@ -1750,6 +1750,11 @@ GameObject:
   - component: {fileID: 876423211}
   - component: {fileID: 876423210}
   - component: {fileID: 876423212}
+  - component: {fileID: 876423216}
+  - component: {fileID: 876423215}
+  - component: {fileID: 876423214}
+  - component: {fileID: 876423213}
+  - component: {fileID: 876423217}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -1837,7 +1842,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26580b1bf5b218c4ca249c0c9c44d2ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerScore: 9001
+--- !u!114 &876423213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876423209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00d45866c74452642b3a382788a24af5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dCanvas: {fileID: 0}
+  eventText: {fileID: 0}
+  xpos: 0
+  ypos: 0
+  enemyID: 0
+--- !u!114 &876423214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876423209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b738a69c46fdae14a950cdc0bdde0a6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  state: 0
+--- !u!114 &876423215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876423209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f753dfd436f56494cbd7b213081643c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  switches: 0
+  tutorial: 0
+  SlimeO: {fileID: 0}
+  Goblin: {fileID: 0}
+  Slime: 0
+  Gardener: 0
+  GhostO: {fileID: 0}
+  Minotaur: 0
+  Ghost: 0
+  gameState: 0
+  hasSeenDialog: 0
+  townLevel: 0
+--- !u!114 &876423216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876423209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e20a29e3e6f2346bb2c8a64eeec48f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resourcebox: {fileID: 0}
+  resources:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+--- !u!114 &876423217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 876423209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3badbf32592cfc14b83cd0ddd455e906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &877998707
 GameObject:
   m_ObjectHideFlags: 0
@@ -3353,6 +3442,7 @@ GameObject:
   - component: {fileID: 1555687236}
   - component: {fileID: 1555687235}
   - component: {fileID: 1555687234}
+  - component: {fileID: 1555687237}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3425,6 +3515,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1555687237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555687233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3badbf32592cfc14b83cd0ddd455e906, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1563259907
 GameObject:
   m_ObjectHideFlags: 0
