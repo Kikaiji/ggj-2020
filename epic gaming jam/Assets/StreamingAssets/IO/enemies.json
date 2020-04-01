@@ -2,7 +2,11 @@
 	"enemies": [{
 			"id": 0,
 			"title": "Slime",
-			"stats": [5, 5, 5, 10, 0],
+			"attack": 5,
+			"defence": 5,
+			"speed": 5,
+			"health": 10,
+			"mana": 0,
 			"stage": 0,
 			"level": 1,
 			"type": 0,
@@ -11,7 +15,11 @@
 		{
 			"id": 1,
 			"title": "Ghost",
-			"stats": [4, 6, 6, 8, 0],
+			"attack ": 4,
+			"defence": 6,
+			"speed": 6,
+			"health": 8,
+			"mana": 0,
 			"stage": 0,
 			"level": 1,
 			"type": 0,
@@ -19,12 +27,16 @@
 		}, {
 			"id": 2,
 			"title": "Minotaur",
-			"stats": [8, 6, 3, 30, 0],
+			"attack": 8,
+			"defence": 6,
+			"speed": 3,
+			"health": 30,
+			"mana": 0,
 			"stage": 0,
 			"level": 1,
 			"type": 0,
 			"slug": "enemy_minotaur"
 		}
-		]
+	]
 
 }

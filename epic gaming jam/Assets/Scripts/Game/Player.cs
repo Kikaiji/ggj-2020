@@ -4,21 +4,19 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    /*   
     public int maxHealth = 100;
-
     public int currenthealth;
     public int maxMp = 100;
     public int currentMp;
 
-    public BattleHud healthBar;
-    public BattleHud mpbar;
+    public HealthBar healthBar;
+    public MPSliderScript mpbar;
 
     // Start is called before the first frame update
     void Start()
     {
         currenthealth = maxHealth;
-        healthBar.SetHp(maxHealth);
+        healthBar.SetMaxHealth(maxHealth);
 
         currentMp = maxMp;
         mpbar.SetMp(maxMp);
@@ -39,17 +37,17 @@ public class Player : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currenthealth -= damage;
-        healthBar.SetHp(currenthealth);
+        healthBar.SetHealth(currenthealth);
         
     }
 
-    void TakeDamageMP (int damage)
+    public void TakeDamageMP (int damage)
     {
         currentMp -= damage;
         mpbar.SetMp(currentMp);
     }
-    */
+ 
 }

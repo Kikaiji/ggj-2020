@@ -55,16 +55,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\HealthBar.cs" />
-     <Compile Include="Assets\MPSliderScript.cs" />
-     <Compile Include="Assets\Player.cs" />
      <Compile Include="Assets\Scripts\Cinematic\CinematicController.cs" />
      <Compile Include="Assets\Scripts\Dialog\DialogController.cs" />
      <Compile Include="Assets\Scripts\Game\BattleHud.cs" />
      <Compile Include="Assets\Scripts\Game\BattleManager.cs" />
      <Compile Include="Assets\Scripts\Game\EnemyTile.cs" />
      <Compile Include="Assets\Scripts\Game\GameManager.cs" />
+     <Compile Include="Assets\Scripts\Game\HealthBar.cs" />
+     <Compile Include="Assets\Scripts\Game\MPSliderScript.cs" />
      <Compile Include="Assets\Scripts\Game\NewDataBase.cs" />
+     <Compile Include="Assets\Scripts\Game\Player.cs" />
      <Compile Include="Assets\Scripts\Game\ResourceManager.cs" />
      <Compile Include="Assets\Scripts\Game\TownManager.cs" />
      <Compile Include="Assets\Scripts\Game\Unit.cs" />

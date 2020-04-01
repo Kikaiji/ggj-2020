@@ -1,9 +1,18 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System.IO;
 
+
+/*
+ * This script is deprecated have been replaced by the NewDataBase script. The idea of this was to parse JSON data and create enemy objects.
+ * I believe this script has incorrectly done at all stages of that. The JSON enemyData and allyData are both empty as well empty as eDatabase and aDatabse
+ * 
+ * The (int)enemyData[i]["stats"]["attack"] is almost certainly an example of an InvalidCastException
+ * I believed it was best to simply start again and create  one from the ground up. 
+ * 
 //creates the enemy and ally databases for battle
 [System.Serializable]
 public class Database : MonoBehaviour
@@ -193,3 +202,4 @@ public class Ally
         this.ID = -1;
     }
 }
+*/

@@ -4,7 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-// a lot
+/*
+ *The purpose of this script is to get references to the various scripts described in the start fucntion. 
+ *Set up conditions in multiple scenes. It Animates in the player and ally prefab. Shows and hides UI elements. 
+ *It also creates the OnClick functions for the various UI buttons. This scripts also controls the overall battle conditions
+ *changing the textbox and driving animation of the players health bar. All merthods should be of type IEnumerator but I have run out of time to change them back.
+ * 
+ * There are also a considerable amount of code that has been commented out. I am leaving this in as legacy code as I am not sure if it is useful . 
+ */
 public enum BattleState { START, PLAYERTURN, ALLYTURN, ENEMYTURN, PROCESSING, WON, LOST}
 
 public class BattleManager : MonoBehaviour
@@ -12,7 +19,6 @@ public class BattleManager : MonoBehaviour
     
     int enemyID;
     bool tutorial;
-    Stats stats;
     GameManager manager;
     GameObject dCanvas;
      
@@ -20,7 +26,8 @@ public class BattleManager : MonoBehaviour
     PlayerController pcontroller;
 
     TownManager tManager;
-    Database database;
+    NewDataBase dataBase;
+    Player player;
     public bool ally;
     public GameObject allyPrefab;
     public GameObject playerPrefab;
@@ -36,7 +43,8 @@ public class BattleManager : MonoBehaviour
     public GameObject[] turnOrder = new GameObject[11];
 
     public Transform playerStation;
-    public Transform enemyStation;
+    public Transform allyStation;
+    public Transform enemyGrid;
 
     Unit playerUnit;
     Unit enemyUnit;
@@ -47,25 +55,45 @@ public class BattleManager : MonoBehaviour
     public Text consoleText;
 
     public BattleState state;
+    string enemyUnitName;
+    int enemyUnitAttack;
 
+    /*
+     *void Awake() is used to initialize any variables or game state before the game starts.
+     *Awake is called in a random order between objects. 
+     *Because of this, you should use Awake to set up references between scripts, and use Start to pass any information back and forth
+     */
     void Awake()
     {
-        database = GetComponent<Database>();
+        //Get a refernce to the NewDataBase Script
+        dataBase = GetComponent<NewDataBase>();
+        //Get a reference to the Player script
+        player = GetComponent<Player>();
+        //Get a reference to the ResourceManger Script
         rManager = GetComponent<ResourceManager>();
+        //Get a reference to the TownManager Script
         tManager = GetComponent<TownManager>();
+        //Get a reference to the GameManger Script
         manager = GetComponent<GameManager>();
+        //Get a reference to the PlyerController Script
         pcontroller = GetComponent<PlayerController>();
+    
     }
+
+    //Start is called before the first frame update
     public void Start()
     {
         DontDestroyOnLoad(PlayerAction);
         DontDestroyOnLoad(AllyAction);
+
+        enemyUnitName = dataBase.ConstructEnemyName();
+        enemyUnitAttack = dataBase.ConstructEnemyAttack();
         state = BattleState.START;
         tutorial = tManager.tutorial;
         //enemyID = pcontroller.enemyID;
         //enemypositions = GameObject.Find("EnemyGrid");
         //state = BattleState.START;
-        SetUpBattle();
+        StartCoroutine(SetUpBattle());
     }
 
 
@@ -97,19 +125,14 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void SetUpBattle()
+    IEnumerator SetUpBattle()
     {
-        Debug.Log("I am in SetUpbattle");
         GameObject playerGO = Instantiate(playerPrefab, playerStation);
-        if (tManager.Gardener) { GameObject allyGO = Instantiate(allyPrefab, playerStation); allyGO.transform.position = new Vector3(playerStation.transform.position.x - 3, playerStation.transform.position.y - .5f); }
-        playerUnit = playerGO.GetComponent<Unit>();
-        GameObject enemyGO = Instantiate(enemyPrefab, enemyStation);
-        //Enemy enemy = database.FetchEnemyByID(enemyID);
-        //database.ConstructAllyDatabase();
-
-
-
-        /*enemyUnit.Attack = enemy.Stats.Attack;
+        GameObject allyGO = Instantiate(allyPrefab, allyStation);
+        //allyGO.transform.position = new Vector3(playerStation.transform.position.x - 4, playerStation.transform.position.y - .6f);
+        //playerUnit = playerGO.GetComponent<Unit>();
+        /*
+        enemyUnit.Attack = enemy.Stats.Attack;
         enemyUnit.Defense = enemy.Stats.Defense;
         enemyUnit.Speed = enemy.Stats.Speed;
         enemyUnit.unitName = enemy.Name;
@@ -125,11 +148,11 @@ public class BattleManager : MonoBehaviour
             }
         }
         */
-        //consoleText.text = "A " + enemyUnit.unitName + " Approaches";
+        consoleText.text = "A " + enemyUnitName + " Approaches";
 
         //playerHud.SetHUD(playerUnit);
         //enemyHud.SetHUD(enemyUnit);
-        //yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f);
 
         state = BattleState.PLAYERTURN;
         print(state);
@@ -154,18 +177,19 @@ public class BattleManager : MonoBehaviour
     }
     */
 
+
     public void PlayerTurn()
     {
-        //PlayerAction.SetActive(true);
+        PlayerAction.SetActive(true);
         consoleText.text = "Choose an Action: ";
     }
 
     public void OnAttackButton()
     {
-       
-        
-            PlayerAttack();
-            print("I am back in onattackbutton");
+
+
+        StartCoroutine(PlayerAttack());
+        print("I am back in onattackbutton");
             
         
     }
@@ -202,7 +226,7 @@ public class BattleManager : MonoBehaviour
         //if (state != BattleState.PLAYERTURN || (tutorial == true))
            // return;
 
-        PlayerRun();
+        StartCoroutine(PlayerRun());
     }
 
     void EndBattle()
@@ -251,37 +275,35 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    void PlayerAttack()
+    IEnumerator PlayerAttack()
     {
-        Debug.Log("I am in attack function");
-        consoleText.text = "You attacked";
+        consoleText.text = "You attacked the " +  enemyUnitName;
         if (state == BattleState.PLAYERTURN)
         {
             
             Debug.Log("I am past PlayerAttack");
             print(state);
+            //playerUnit.anim.Play("NomadBattleAnim");
+            //bool isdead = enemyUnit.TakeDamage(playerUnit.Attack);
+            //enemyHud.SetHp(enemyUnit.CurrentHP);
+            //consoleText.text = /*enemyUnit.unitName +*/ " took " + /*playerUnit.Attack + */ "damage!";
+            yield return new WaitForSeconds(2f);
+            //enemyHud.SetHp(enemyUnit.CurrentHP);
+            //playerHud.SetMp(playerUnit.CurrentMP);
 
-        //playerUnit.anim.Play("NomadBattleAnim");
-        //bool isdead = enemyUnit.TakeDamage(playerUnit.Attack);
-        //yield return new WaitForSeconds(1f);
-        //enemyHud.SetHp(enemyUnit.CurrentHP);
-        //consoleText.text = /*enemyUnit.unitName +*/ " took " + /*playerUnit.Attack + */ "damage!";
-        //yield return new WaitForSeconds(2f);
-        //enemyHud.SetHp(enemyUnit.CurrentHP);
-        //playerHud.SetMp(playerUnit.CurrentMP);
-
-        //if (isdead)
-        //{
-        //state = BattleState.WON;
-        //StartCoroutine(EndBattle());
-        //}
-        //else
-        //{
-        //state = BattleState.ENEMYTURN;
-        //StartCoroutine(EnemyAttack());
-        // }
+            //if (isdead)
+            //{
+            //state = BattleState.WON;
+            //StartCoroutine(EndBattle());
+            //}
+            //else
+            //{
+            //state = BattleState.ENEMYTURN;
+            //StartCoroutine(EnemyAttack());
+            // }
         }
-        EnemyAttack();
+
+        StartCoroutine(EnemyAttack());
 
     }
 
@@ -346,7 +368,7 @@ public class BattleManager : MonoBehaviour
         */
     }
 
-    void PlayerRun()
+    IEnumerator PlayerRun()
     {
         Debug.Log("I am in run function");
         state = BattleState.PROCESSING;
@@ -356,21 +378,23 @@ public class BattleManager : MonoBehaviour
             //rManager.resources[i] = (rManager.resources[i] * 3) / 4;
         //}
         consoleText.text = "You ran away!";
+        yield return new WaitForSeconds(2f);
         
         //SceneManager.UnloadSceneAsync("DungeonScene");
         //SceneManager.UnloadSceneAsync("BattleScene");
         SceneManager.LoadSceneAsync("TownScene");
     }
 
-    void EnemyAttack()
+    IEnumerator EnemyAttack()
     {
-        Debug.Log("I am in enemyAttack")
-;       state = BattleState.PROCESSING;
-        consoleText.text = "attacks!";
-        //yield return new WaitForSeconds(1f);
+        Debug.Log("I am in enemyAttack");      
+        state = BattleState.PROCESSING;
+        consoleText.text = "The "+ enemyUnitName + " attacks!";
+        yield return new WaitForSeconds(2f);
+        player.TakeDamage(enemyUnitAttack + 2);
         //bool isDead = playerUnit.TakeDamage(enemyUnit.Attack);
         //playerHud.SetHp(playerUnit.CurrentHP);
-        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
         /*if (isDead)
         {

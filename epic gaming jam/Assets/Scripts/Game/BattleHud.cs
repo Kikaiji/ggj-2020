@@ -5,6 +5,12 @@ using UnityEngine.UI;
 
 public class BattleHud : MonoBehaviour
 {
+    /*
+     *This is currently a deprecated script. 
+     *I have the core functionality of this script with the HeathBar, MPSliderScript and Player Scripts 
+     */
+
+
     /*//grabs the unit's hp and mp, sets the hud for that unit
     public Text nameText;
     public Slider hpSlider;

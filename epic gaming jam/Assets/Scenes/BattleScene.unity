@@ -480,7 +480,6 @@ GameObject:
   - component: {fileID: 242315226}
   - component: {fileID: 242315228}
   - component: {fileID: 242315227}
-  - component: {fileID: 242315229}
   m_Layer: 5
   m_Name: Nomad Box
   m_TagString: Untagged
@@ -549,18 +548,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242315225}
   m_CullTransparentMesh: 0
---- !u!114 &242315229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 242315225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &271851276
 GameObject:
   m_ObjectHideFlags: 0
@@ -1749,11 +1736,11 @@ GameObject:
   m_Component:
   - component: {fileID: 876423211}
   - component: {fileID: 876423210}
-  - component: {fileID: 876423212}
   - component: {fileID: 876423216}
   - component: {fileID: 876423215}
   - component: {fileID: 876423214}
   - component: {fileID: 876423213}
+  - component: {fileID: 876423212}
   - component: {fileID: 876423217}
   m_Layer: 0
   m_Name: BattleManager
@@ -1811,8 +1798,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   playerStation: {fileID: 2139636198}
-  enemyStation: {fileID: 2007085325}
-  playerHud: {fileID: 242315229}
+  allyStation: {fileID: 807596872}
+  enemyGrid: {fileID: 443993312}
+  playerHud: {fileID: 0}
   enemyHud: {fileID: 990297587}
   consoleText: {fileID: 706121341}
   state: 0
@@ -1839,7 +1827,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 876423209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26580b1bf5b218c4ca249c0c9c44d2ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 3badbf32592cfc14b83cd0ddd455e906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &876423213
@@ -1924,9 +1912,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 876423209}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3badbf32592cfc14b83cd0ddd455e906, type: 3}
+  m_Script: {fileID: 11500000, guid: 1455cb3664b1ad040b2eaf4e142e7378, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  currenthealth: 0
+  maxMp: 100
+  currentMp: 0
+  healthBar: {fileID: 927455664}
+  mpbar: {fileID: 1451094492}
 --- !u!1 &877998707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2107,9 +2101,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 927455661}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
+  m_Script: {fileID: 11500000, guid: f806b1c4d2c96f74fbff57199b271518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 927455663}
 --- !u!1 &932590195
 GameObject:
   m_ObjectHideFlags: 0
@@ -2268,7 +2263,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0.97
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3339,7 +3334,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1451094489}
   - component: {fileID: 1451094490}
-  - component: {fileID: 1451094491}
+  - component: {fileID: 1451094492}
   m_Layer: 5
   m_Name: MP Slider
   m_TagString: Untagged
@@ -3419,7 +3414,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1451094491
+--- !u!114 &1451094492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3428,9 +3423,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1451094488}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba8de6d60f69ae4795a4fe775951f14, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f2b466b89a7bf440bb8a9ecbb16118d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  slider: {fileID: 1451094490}
 --- !u!1 &1555687233
 GameObject:
   m_ObjectHideFlags: 0
@@ -3442,7 +3438,6 @@ GameObject:
   - component: {fileID: 1555687236}
   - component: {fileID: 1555687235}
   - component: {fileID: 1555687234}
-  - component: {fileID: 1555687237}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3515,18 +3510,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1555687237
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555687233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3badbf32592cfc14b83cd0ddd455e906, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1563259907
 GameObject:
   m_ObjectHideFlags: 0
